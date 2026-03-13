@@ -21,7 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription:
       "Honest breakdown of website costs in Canada for 2025. Template sites, custom builds, Shopify stores, and what actually affects the price.",
     date: "2025-03-10",
-    readingTime: "8 min read",
+    readingTime: "3 min read",
     category: "Web Design",
     excerpt:
       "The real answer nobody wants to give you. We break down what websites actually cost in Canada, what affects the price, and when it makes sense to spend more.",
@@ -70,7 +70,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription:
       "Honest comparison of Wix vs custom-built websites. Performance, SEO, cost, and when each option makes sense for Canadian businesses.",
     date: "2025-03-06",
-    readingTime: "7 min read",
+    readingTime: "3 min read",
     category: "Web Design",
     excerpt:
       "Wix is easy. Custom is better. But the real answer depends on what your business actually needs. Here's how to decide.",
@@ -114,7 +114,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription:
       "GTA small businesses are losing customers to competitors who invest in SEO. Here's why local SEO matters and what it actually takes to rank in Toronto, Oshawa, and Durham Region.",
     date: "2025-03-01",
-    readingTime: "9 min read",
+    readingTime: "4 min read",
     category: "SEO",
     excerpt:
       "Your competitors are ranking above you on Google right now. If you're a small business in the GTA and you're not doing SEO, here's what that's costing you.",

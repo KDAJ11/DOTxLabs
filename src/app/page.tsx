@@ -384,7 +384,7 @@ function CoreServices() {
               <Card3D className="h-full">
                 <MouseShine className="h-full">
                   <Link
-                    href={`/services#${service.id}`}
+                    href={`/services/${service.id}`}
                     className="group relative block h-full rounded-2xl p-8 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10 hover:border-accent/20"
                     style={{
                       background: "rgba(255, 255, 255, 0.65)",
@@ -508,7 +508,7 @@ function MoreServices() {
               <Card3D className="h-full">
                 <MouseShine className="h-full">
                   <Link
-                    href={`/services#${service.id}`}
+                    href={`/services/${service.id}`}
                     className="group relative block h-full p-6 hover:bg-white/[0.08] hover:border-accent/30 transition-all duration-500"
                     style={{
                       background: "rgba(255,255,255,0.04)",

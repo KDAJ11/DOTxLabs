@@ -7,6 +7,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import { SERVICES } from "@/lib/data";
 import type { ServiceCategory } from "@/lib/data";
+import { getAllServiceSlugs } from "@/lib/service-pages-data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
 const CATEGORY_ACCENT: Record<ServiceCategory, string> = {
@@ -33,12 +34,15 @@ const DARK_ORB_CONFIGS = [
 
 /* ─── Animated service section content ──────────────── */
 
+const SERVICE_SUBPAGE_SLUGS = getAllServiceSlugs();
+
 function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[number]; isEven: boolean; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduced = useReducedMotion();
 
   const shouldAnimate = inView && !reduced;
+  const hasSubpage = SERVICE_SUBPAGE_SLUGS.includes(service.id);
 
   return (
     <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -71,13 +75,24 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
         >
           {service.description}
         </p>
-        <Link
-          href="/contact"
-          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
-        >
-          Start Your Project
-          <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-        </Link>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {hasSubpage && (
+            <Link
+              href={`/services/${service.id}`}
+              className="group inline-flex items-center gap-2 rounded-full border border-accent/30 px-6 py-3 text-sm font-medium text-accent hover:bg-accent/10 transition-all duration-300 min-h-[44px]"
+            >
+              Learn More
+              <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          )}
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+          >
+            Start Your Project
+            <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </motion.div>
 
       {/* Deliverables card — slides in from right */}
