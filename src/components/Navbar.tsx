@@ -138,6 +138,14 @@ export default function Navbar() {
             ))}
 
             <Link
+              href="/blog"
+              className="px-4 py-2 text-[13px] font-normal text-white/60 hover:text-white transition-colors duration-300"
+              style={{ letterSpacing: "0.02em" }}
+            >
+              Blog
+            </Link>
+
+            <Link
               href="/contact"
               className="px-4 py-2 text-[13px] font-normal text-white/60 hover:text-white transition-colors duration-300"
               style={{ letterSpacing: "0.02em" }}
@@ -208,6 +216,14 @@ export default function Navbar() {
                   ))}
                 </div>
               ))}
+
+              <Link
+                href="/blog"
+                onClick={() => setMobileOpen(false)}
+                className="block text-base text-white/60 hover:text-white py-2 min-h-[44px] font-normal"
+              >
+                Blog
+              </Link>
 
               <Link
                 href="/contact"

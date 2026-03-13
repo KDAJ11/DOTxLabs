@@ -112,6 +112,12 @@ export default function Footer() {
               Services
             </Link>
             <Link
+              href="/blog"
+              className="footer-link text-xs text-white/30 hover:text-white/60 transition-colors"
+            >
+              Blog
+            </Link>
+            <Link
               href="/contact"
               className="footer-link text-xs text-white/30 hover:text-white/60 transition-colors"
             >

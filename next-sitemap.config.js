@@ -9,7 +9,7 @@ module.exports = {
   exclude: ["/api/*"],
   transform: async (config, path) => {
     // Set higher priority for key pages
-    const highPriority = ["/", "/services", "/contact"];
+    const highPriority = ["/", "/services", "/contact", "/blog"];
     const mediumPriority = [
       "/services/web-development",
       "/services/seo",
