@@ -21,6 +21,13 @@ module.exports = {
       "/locations/pickering",
       "/locations/ajax",
       "/locations/whitby",
+      "/locations/toronto",
+      "/locations/scarborough",
+      "/locations/markham",
+      "/locations/mississauga",
+      "/locations/brampton",
+      "/locations/vaughan",
+      "/locations/bowmanville",
     ];
 
     let priority = config.priority;

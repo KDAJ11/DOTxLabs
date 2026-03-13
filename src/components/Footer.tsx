@@ -15,7 +15,7 @@ export default function Footer() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div>
             <Link
@@ -25,11 +25,11 @@ export default function Footer() {
               DOT<span className="text-accent">x</span>Labs
             </Link>
             <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-xs">
-              Web design, SEO & AI automation for businesses across Canada.
+              Web design, SEO & AI automation for businesses across the GTA.
             </p>
           </div>
 
-          {/* Services columns */}
+          {/* Services column */}
           <div>
             <h3 className="text-xs font-semibold uppercase text-accent mb-4" style={{ letterSpacing: "0.15em" }}>
               Services
@@ -51,9 +51,10 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Durham Region locations */}
           <div>
             <h3 className="text-xs font-semibold uppercase text-accent mb-4" style={{ letterSpacing: "0.15em" }}>
-              Locations
+              Durham Region
             </h3>
             <ul className="space-y-3">
               <li>
@@ -62,8 +63,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/locations/pickering" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
-                  Pickering
+                <Link href="/locations/whitby" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Whitby
                 </Link>
               </li>
               <li>
@@ -72,8 +73,52 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/locations/whitby" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
-                  Whitby
+                <Link href="/locations/pickering" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Pickering
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/bowmanville" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Bowmanville
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* GTA locations */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase text-accent mb-4" style={{ letterSpacing: "0.15em" }}>
+              Greater Toronto
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/locations/toronto" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Toronto
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/scarborough" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Scarborough
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/markham" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Markham
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/mississauga" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Mississauga
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/brampton" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Brampton
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/vaughan" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Vaughan
                 </Link>
               </li>
             </ul>

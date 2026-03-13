@@ -819,7 +819,7 @@ function FAQSection() {
             Common questions
           </h2>
           <p className="mt-4 text-lg text-hero/50 max-w-xl" style={{ lineHeight: 1.6 }}>
-            Straight answers. No filler.
+            Questions we hear most from GTA business owners.
           </p>
         </FadeIn>
 
