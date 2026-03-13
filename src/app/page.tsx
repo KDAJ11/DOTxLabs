@@ -6,7 +6,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { ArrowRight, Code2, Search, Bot, Palette, BarChart3, Megaphone, PenTool, Layers } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Card3D from "@/components/Card3D";
-import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS, PROCESS_STEPS, FAQ_ITEMS } from "@/lib/data";
+import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS, PROCESS_STEPS, FAQ_ITEMS, WHY_DOTXLABS, RESULTS_HIGHLIGHTS, INDUSTRIES_EXPANDED } from "@/lib/data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
 /* ─── Hooks ───────────────────────────────────────────── */
@@ -833,6 +833,163 @@ function FAQSection() {
   );
 }
 
+/* ─── Why DOTxLabs ────────────────────────────────────── */
+
+function WhyDOTxLabs() {
+  return (
+    <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] animate-pulse-glow" />
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-purple-600/[0.04] rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "3s" }} />
+      </div>
+      <div className="absolute inset-0 dot-grid-dark opacity-30" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Why DOTxLabs
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+            What makes us different
+          </h2>
+        </FadeIn>
+
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {WHY_DOTXLABS.map((item, i) => (
+            <FadeIn key={item.heading} delay={i * 0.1}>
+              <div
+                className="group p-8 rounded-2xl hover:bg-white/[0.06] transition-all duration-500"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  borderRadius: 16,
+                }}
+              >
+                <h3 className="text-xl font-bold text-white group-hover:text-accent transition-colors duration-300">
+                  {item.heading}
+                </h3>
+                <p className="mt-4 text-sm sm:text-base text-white/45 leading-relaxed">
+                  {item.content}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Results / Proof ─────────────────────────────────── */
+
+function ResultsSection() {
+  return (
+    <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 dot-grid-light" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute inset-0 faint-grid" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Results
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-hero leading-tight">
+            What our work looks like in numbers
+          </h2>
+        </FadeIn>
+
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {RESULTS_HIGHLIGHTS.map((item, i) => (
+            <FadeIn key={item.label} delay={i * 0.12}>
+              <div
+                className="group relative rounded-2xl p-8 transition-all duration-500 hover:shadow-lg hover:shadow-accent/5"
+                style={{
+                  background: "rgba(255, 255, 255, 0.65)",
+                  backdropFilter: "blur(20px) saturate(1.3)",
+                  WebkitBackdropFilter: "blur(20px) saturate(1.3)",
+                  border: "1px solid rgba(255,255,255,0.8)",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.6)",
+                  borderRadius: 16,
+                }}
+              >
+                <span className="block text-4xl sm:text-5xl font-display font-black text-accent">
+                  {item.stat}
+                </span>
+                <h3 className="mt-2 text-lg font-bold text-hero">
+                  {item.label}
+                </h3>
+                <p className="mt-4 text-sm text-hero/50 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Industries Expanded ─────────────────────────────── */
+
+function IndustriesSection() {
+  return (
+    <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px]" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-blue-600/[0.04] rounded-full blur-[100px]" />
+      </div>
+      <div className="absolute inset-0 dot-grid-dark opacity-30" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Industries We Work With
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+            Built for every kind of business
+          </h2>
+          <p className="mt-4 text-lg text-white/50 max-w-xl" style={{ lineHeight: 1.6 }}>
+            From local trades to tech startups, we understand how different businesses
+            need to show up online. Here&apos;s who we work with.
+          </p>
+        </FadeIn>
+
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {INDUSTRIES_EXPANDED.map((industry, i) => (
+            <FadeIn key={industry.name} delay={i * 0.08}>
+              <div
+                className="p-6 rounded-2xl hover:bg-white/[0.08] transition-all duration-500"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  borderRadius: 16,
+                }}
+              >
+                <h3 className="text-lg font-bold text-white">
+                  {industry.name}
+                </h3>
+                <p className="mt-3 text-sm text-white/40 leading-relaxed">
+                  {industry.description}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── CTA Banner ───────────────────────────────────────── */
 
 function CTABanner() {
@@ -922,6 +1079,9 @@ export default function HomePage() {
       <CoreServices />
       <MoreServices />
       <Philosophy />
+      <WhyDOTxLabs />
+      <ResultsSection />
+      <IndustriesSection />
       <ClientMarquee />
       <FAQSection />
       <CTABanner />

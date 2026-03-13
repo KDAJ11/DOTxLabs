@@ -287,3 +287,80 @@ export const FAQ_ITEMS = [
       "Yes. We work with clients across Canada and internationally. We've got clients in West Africa right now. As long as we can get on a call and understand your business, location doesn't matter. Same quality, same commitment, wherever you are.",
   },
 ];
+
+export const WHY_DOTXLABS = [
+  {
+    heading: "We build custom, not from templates",
+    content:
+      "Every website we deliver is coded from scratch on Next.js or built as a custom Shopify theme. No page builders, no drag-and-drop, no recycled layouts. That gives us full control over performance, SEO, and design. Your site loads faster, ranks better, and looks like nothing else in your industry. We've worked with enough template sites to know the difference it makes. Clients who come to us from Wix or Squarespace see the gap immediately once their custom site goes live and starts showing up on Google.",
+  },
+  {
+    heading: "SEO is part of the build, not an afterthought",
+    content:
+      "Most agencies build a site and then try to bolt SEO on later. That's backwards. We do keyword research and site architecture planning before we design a single page. Every URL, every heading, every piece of content is structured to rank. Technical SEO (schema markup, canonical tags, sitemap, Core Web Vitals optimization) is built into the development process. By the time your site launches, it's already optimized for Google. The SEO work after launch is about growth, not fixing mistakes.",
+  },
+  {
+    heading: "AI makes us faster without cutting corners",
+    content:
+      "We use AI across our workflow. Research, content drafting, code generation, design iteration, testing. It lets a small team deliver at the speed and quality of a much larger agency without the overhead costs getting passed to you. But the work still goes through human review. AI handles the repetitive tasks, and we handle the judgment calls. The result is faster timelines, lower costs, and work that doesn't feel like it was assembled by a robot.",
+  },
+  {
+    heading: "We stay after the build is done",
+    content:
+      "Launch day is not the end of the project for us. We track how your site performs, flag issues before they become problems, and bring ideas to the table that you didn't ask for but probably need. New landing pages to target keywords gaining traction. Content updates based on what's actually driving traffic. Adjustments to conversion paths based on real user data. We want to see the sites we build generate revenue, not just look good in a portfolio.",
+  },
+];
+
+export const RESULTS_HIGHLIGHTS = [
+  {
+    stat: "3x",
+    label: "Average traffic increase",
+    description:
+      "Clients who invest in both a custom website and ongoing SEO with us see their organic traffic triple within the first six months. Some see more. The exact number depends on where they started and how competitive their market is, but the trajectory is consistent. Better site, better content, better rankings, more traffic.",
+  },
+  {
+    stat: "Top 3",
+    label: "Local search rankings",
+    description:
+      "For Durham Region keywords like \"web design oshawa\" and \"seo whitby,\" we're targeting top three positions within 90 days of launching local SEO campaigns. These are keywords with real search volume and low competition. The businesses that move on them now have a significant first-mover advantage before the market catches up.",
+  },
+  {
+    stat: "100%",
+    label: "Client retention",
+    description:
+      "Every client we've worked with has either continued with ongoing services or come back for additional projects. That's not because we lock people into contracts. It's because the work speaks for itself and we treat their business like it's ours. When the site we built is actually making them money, continuing the relationship is an easy decision.",
+  },
+];
+
+export const INDUSTRIES_EXPANDED = [
+  {
+    name: "Local service businesses",
+    description:
+      "Plumbers, electricians, landscapers, cleaners, contractors. Your customers search Google before they call anyone. We build sites and run local SEO that puts you at the top of those results in your service area.",
+  },
+  {
+    name: "Professional services",
+    description:
+      "Law firms, accountants, consultants, financial advisors. Your website needs to build trust before the first meeting. We create professional, credible online presences that convert visitors into booked consultations.",
+  },
+  {
+    name: "E-commerce and retail",
+    description:
+      "Product businesses that sell online. Custom Shopify stores with optimized product pages, fast checkout flows, and SEO that drives organic sales. From single-product brands to catalogs with hundreds of SKUs.",
+  },
+  {
+    name: "Restaurants and hospitality",
+    description:
+      "Your menu, hours, and location need to show up when hungry people search. We build fast, mobile-first sites with Google Business Profile optimization that drives foot traffic and online orders.",
+  },
+  {
+    name: "Health and wellness",
+    description:
+      "Clinics, gyms, therapists, wellness practitioners. Patients and clients search online first. We build sites that rank for local health-related searches and make booking an appointment easy.",
+  },
+  {
+    name: "Startups and tech companies",
+    description:
+      "You need to move fast and look credible from day one. We build launch-ready websites that position your product professionally, integrate with your tech stack, and scale as you grow.",
+  },
+];
