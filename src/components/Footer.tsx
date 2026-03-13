@@ -25,8 +25,7 @@ export default function Footer() {
               DOT<span className="text-accent">x</span>Labs
             </Link>
             <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-xs">
-              AI-first full-service digital agency serving brands across the
-              Greater Toronto Area and beyond.
+              Web design, SEO & AI automation for businesses across Canada.
             </p>
           </div>
 

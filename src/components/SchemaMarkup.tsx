@@ -1,8 +1,10 @@
 /**
  * JSON-LD Schema Markup for DOTxLabs
- * Includes: Organization, LocalBusiness, WebSite schemas
+ * Includes: Organization, LocalBusiness, WebSite, FAQPage schemas
  * These help Google understand business info for rich results & local pack.
  */
+
+import { FAQ_ITEMS } from "@/lib/data";
 
 const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
@@ -189,6 +191,19 @@ const WEBSITE_SCHEMA = {
   },
 };
 
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+
 export default function SchemaMarkup() {
   return (
     <>
@@ -208,6 +223,12 @@ export default function SchemaMarkup() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(WEBSITE_SCHEMA),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(FAQ_SCHEMA),
         }}
       />
     </>

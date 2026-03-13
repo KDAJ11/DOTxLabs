@@ -6,7 +6,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { ArrowRight, Code2, Search, Bot, Palette, BarChart3, Megaphone, PenTool, Layers } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Card3D from "@/components/Card3D";
-import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS, PROCESS_STEPS } from "@/lib/data";
+import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS, PROCESS_STEPS, FAQ_ITEMS } from "@/lib/data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
 /* ─── Hooks ───────────────────────────────────────────── */
@@ -121,7 +121,7 @@ const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ─── Hero ─────────────────────────────────────────────── */
 
-const HERO_WORDS = "Built for Brands That Mean Business.".split(" ");
+const HERO_WORDS = "We Build Websites That Actually Rank.".split(" ");
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -234,8 +234,8 @@ function Hero() {
           className="mt-6 text-lg sm:text-xl text-white/60 max-w-2xl mx-auto"
           style={{ lineHeight: 1.6 }}
         >
-          AI-first full-service digital agency delivering design, marketing, and
-          technology for ambitious brands across the Greater Toronto Area.
+          Toronto web design agency powered by AI. Custom websites, SEO,
+          Shopify stores, and automation for businesses across the GTA.
         </motion.p>
 
         <motion.div
@@ -373,8 +373,8 @@ function CoreServices() {
             Technology That Drives Growth
           </h2>
           <p className="mt-4 text-lg text-hero/60 max-w-xl" style={{ lineHeight: 1.6 }}>
-            Our technology services form the backbone of everything we do —
-            building, optimizing, and automating for results.
+            We build, optimize, and automate. These are the services
+            that make everything else work.
           </p>
         </FadeIn>
 
@@ -497,8 +497,8 @@ function MoreServices() {
             Design & Marketing
           </h2>
           <p className="mt-4 text-lg text-white/50 max-w-xl" style={{ lineHeight: 1.6 }}>
-            Complete creative and marketing capabilities to amplify your brand
-            across every channel.
+            The creative and marketing side of what we do. Strategy, design, and
+            execution under one roof.
           </p>
         </FadeIn>
 
@@ -757,6 +757,82 @@ function ClientMarquee() {
   );
 }
 
+/* ─── FAQ Section ─────────────────────────────────────── */
+
+function FAQItem({ question, answer, index }: { question: string; answer: string; index: number }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <FadeIn delay={index * 0.05}>
+      <div
+        className="border-b border-black/5 last:border-b-0"
+      >
+        <button
+          onClick={() => setOpen(!open)}
+          className="w-full flex items-center justify-between py-6 text-left group"
+          aria-expanded={open}
+        >
+          <h3 className="text-base sm:text-lg font-semibold text-hero pr-8 group-hover:text-accent transition-colors">
+            {question}
+          </h3>
+          <motion.span
+            animate={{ rotate: open ? 45 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-accent/10 text-accent text-lg font-light"
+          >
+            +
+          </motion.span>
+        </button>
+        <motion.div
+          initial={false}
+          animate={{
+            height: open ? "auto" : 0,
+            opacity: open ? 1 : 0,
+          }}
+          transition={{ duration: 0.3, ease: EASE_EXPO }}
+          className="overflow-hidden"
+        >
+          <p className="pb-6 text-sm sm:text-base text-hero/60 leading-relaxed max-w-3xl">
+            {answer}
+          </p>
+        </motion.div>
+      </div>
+    </FadeIn>
+  );
+}
+
+function FAQSection() {
+  return (
+    <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 dot-grid-light" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute inset-0 faint-grid" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+
+      <div className="relative z-[1] mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            FAQ
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-hero leading-tight">
+            Common questions
+          </h2>
+          <p className="mt-4 text-lg text-hero/50 max-w-xl" style={{ lineHeight: 1.6 }}>
+            Straight answers. No filler.
+          </p>
+        </FadeIn>
+
+        <div className="mt-12">
+          {FAQ_ITEMS.map((item, i) => (
+            <FAQItem key={i} question={item.question} answer={item.answer} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── CTA Banner ───────────────────────────────────────── */
 
 function CTABanner() {
@@ -819,8 +895,7 @@ function CTABanner() {
             Ready to Build Something Great?
           </h2>
           <p className="mt-4 text-lg text-white/50 max-w-xl mx-auto" style={{ lineHeight: 1.6 }}>
-            Let&apos;s talk about your brand, your goals, and how we can get you
-            there faster.
+            Tell us what you're working on. We'll tell you how we can help.
           </p>
           <div className="mt-10">
             <Link
@@ -848,6 +923,7 @@ export default function HomePage() {
       <MoreServices />
       <Philosophy />
       <ClientMarquee />
+      <FAQSection />
       <CTABanner />
     </>
   );
