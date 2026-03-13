@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/David Ajai/**)",
+      "Bash(npx create-next-app@14 dotxlabs-site --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm)",
+      "Bash(cp -r /c/Users/\"David Ajai\"/dotxlabs-site/* /c/Users/\"David Ajai\"/DOTxLabs/)",
+      "Bash(cp -r /c/Users/\"David Ajai\"/dotxlabs-site/.* /c/Users/\"David Ajai\"/DOTxLabs/)",
+      "Bash(rm -rf /c/Users/\"David Ajai\"/dotxlabs-site)",
+      "Bash(cd /c/Users/\"David Ajai\"/DOTxLabs)",
+      "Bash(npm install:*)",
+      "Bash(npx next:*)",
+      "Bash(where npx:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python \"C:/Users/David Ajai/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/30aa3c42-01f6-4e91-bd86-7137bb0a8ac9/7dd3ecb6-7748-44c9-929b-607934a50483/skills/ui-ux-pro-max/scripts/search.py\" \"digital agency technology web development premium dark immersive 3D\" --design-system -p \"DOTxLabs\")"
+    ]
+  }
+}

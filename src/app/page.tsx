@@ -1,0 +1,793 @@
+"use client";
+
+import Link from "next/link";
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from "motion/react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { ArrowRight, Code2, Search, Bot, Palette, BarChart3, Megaphone, PenTool, Layers } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
+import Card3D from "@/components/Card3D";
+import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS } from "@/lib/data";
+import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
+
+/* ─── Hooks ───────────────────────────────────────────── */
+
+function useIsTouchDevice() {
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
+  return isTouch;
+}
+
+function useCountUp(target: number, duration = 1500) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (!inView) return;
+    if (reduced) {
+      setValue(target);
+      return;
+    }
+
+    const start = performance.now();
+    function easeOutQuart(t: number) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuart(progress);
+      setValue(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }, [inView, target, duration, reduced]);
+
+  return { value, ref };
+}
+
+/* ─── Mouse Shine Overlay for Cards ───────────────────── */
+
+function MouseShine({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const isTouch = useIsTouchDevice();
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setPos({ x, y });
+  }, [isTouch]);
+
+  return (
+    <div className={`relative ${className}`} onMouseMove={handleMouseMove}>
+      {children}
+      {!isTouch && (
+        <div
+          className="absolute inset-0 pointer-events-none rounded-2xl z-10"
+          style={{
+            background: `radial-gradient(circle at ${pos.x}% ${pos.y}%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ─── Reusable: Floating 3D Shape ─────────────────────── */
+
+function FloatingShape({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      className={`absolute pointer-events-none ${className ?? ""}`}
+      style={style}
+    />
+  );
+}
+
+/* ─── Reusable: Parallax Section Wrapper ──────────────── */
+
+function ParallaxBg({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+
+  return (
+    <div ref={ref} className={`relative overflow-hidden ${className ?? ""}`}>
+      <motion.div className="absolute inset-0" style={{ y }}>
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Custom ease constant ────────────────────────────── */
+const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+/* ─── Hero ─────────────────────────────────────────────── */
+
+const HERO_WORDS = "Built for Brands That Mean Business.".split(" ");
+
+function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 500], [0, -80]);
+
+  // Stats count-up
+  const stat1 = useCountUp(50);
+  const stat2 = useCountUp(3);
+  const stat3 = useCountUp(100);
+
+  return (
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center hero-mesh overflow-hidden noise-overlay">
+      {/* CSS Floating orbs (zero JS cost) */}
+      <div className="hero-orb-1" />
+      <div className="hero-orb-2" />
+
+      {/* Animated gradient mesh parallax layer */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+        {/* Dot grid pattern with radial mask */}
+        <div
+          className="absolute inset-0 dot-grid-dark opacity-50"
+          style={{
+            maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+          }}
+        />
+
+        {/* Orbiting ring */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]">
+          <div className="absolute inset-0 border border-white/[0.03] rounded-full" />
+          <div className="animate-orbit">
+            <div className="w-2 h-2 rounded-full bg-accent/40 blur-[2px]" />
+          </div>
+        </div>
+
+        {/* Concentric depth rings */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-white/[0.02] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-white/[0.015] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-white/[0.01] rounded-full" />
+
+        {/* Floating 3D geometric shapes */}
+        <FloatingShape
+          className="animate-float-slow top-[15%] left-[10%] w-16 h-16 border border-accent/20 rounded-lg rotate-45"
+          style={{ animationDelay: "0s" }}
+        />
+        <FloatingShape
+          className="animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full"
+          style={{ animationDelay: "1s" }}
+        />
+        <FloatingShape
+          className="animate-float-reverse bottom-[25%] left-[8%] w-20 h-20 border border-white/[0.05] rounded-2xl"
+          style={{ animationDelay: "3s" }}
+        />
+        <FloatingShape
+          className="animate-float-slow bottom-[20%] right-[12%] w-8 h-8 bg-accent/15 rounded-md rotate-12"
+          style={{ animationDelay: "2s" }}
+        />
+        <FloatingShape
+          className="animate-float-medium top-[60%] left-[25%] w-6 h-6 border border-accent/15 rounded-full"
+          style={{ animationDelay: "4s" }}
+        />
+
+        {/* Top gradient line accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+      </motion.div>
+
+      {/* X Brand — Glass & Scatter */}
+      <XBrand variant="glass" />
+      <XBrand variant="scatter" />
+
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center"
+      >
+        <motion.div
+          style={{ transformPerspective: 1200, y: heroY }}
+        >
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
+            {HERO_WORDS.map((word, i) => (
+              <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
+                <motion.span
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: 0.3 + i * 0.06,
+                    ease: EASE_EXPO,
+                  }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: EASE_EXPO }}
+          className="mt-6 text-lg sm:text-xl text-white/60 max-w-2xl mx-auto"
+          style={{ lineHeight: 1.6 }}
+        >
+          AI-first full-service digital agency delivering design, marketing, and
+          technology for ambitious brands across the Greater Toronto Area.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.85, ease: EASE_EXPO }}
+          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
+            href="/contact"
+            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+          >
+            Start Your Project
+            <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
+          </Link>
+          <Link
+            href="/services"
+            className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:border-white/30 hover:bg-white/[0.06]"
+          >
+            View Services
+            <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
+          </Link>
+        </motion.div>
+
+        {/* Stats counter row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.1, ease: EASE_EXPO }}
+          className="mt-12 pt-8 border-t border-white/[0.06] grid grid-cols-3 gap-8 max-w-lg mx-auto"
+        >
+          <div className="text-center">
+            <span ref={stat1.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+              {stat1.value}+
+            </span>
+            <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
+              GTA Projects
+            </span>
+          </div>
+          <div className="text-center">
+            <span ref={stat2.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+              {stat2.value}&times;
+            </span>
+            <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
+              Traffic
+            </span>
+          </div>
+          <div className="text-center">
+            <span ref={stat3.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+              {stat3.value}%
+            </span>
+            <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
+              Retention
+            </span>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-content to-transparent z-10" />
+    </section>
+  );
+}
+
+/* ─── Gradient Bridge (dark-to-light transition) ──────── */
+
+function GradientBridge() {
+  return (
+    <div
+      className="w-full"
+      style={{
+        height: 120,
+        background: "linear-gradient(to bottom, #0a0a0a, #f8f8f8)",
+      }}
+    />
+  );
+}
+
+/* ─── Core Services (Technology) ───────────────────────── */
+
+const CORE_ICONS: Record<string, React.ReactNode> = {
+  "web-development": <Code2 size={28} aria-hidden="true" />,
+  seo: <Search size={28} aria-hidden="true" />,
+  "ai-automation": <Bot size={28} aria-hidden="true" />,
+};
+
+function CoreServices() {
+  return (
+    <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
+      {/* Depth background */}
+      <div className="absolute inset-0 dot-grid-light" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-400/[0.03] rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4" />
+
+      {/* Ambient light orb */}
+      <div
+        className="light-orb"
+        style={{
+          width: 400,
+          height: 400,
+          top: "20%",
+          left: "10%",
+          background: "radial-gradient(ellipse at 20% 60%, rgba(124,58,237,0.05) 0%, transparent 55%)",
+        }}
+      />
+
+      {/* Faint grid texture */}
+      <div className="absolute inset-0 faint-grid" />
+
+      {/* Subtle grid lines */}
+      <div className="absolute inset-0 grid-lines opacity-50" />
+
+      {/* Floating accents */}
+      <FloatingShape className="animate-float-slow top-[10%] right-[5%] w-24 h-24 border border-accent/[0.06] rounded-2xl rotate-12" />
+      <FloatingShape className="animate-float-reverse bottom-[15%] left-[3%] w-16 h-16 bg-accent/[0.03] rounded-full" style={{ animationDelay: "2s" }} />
+      <FloatingShape className="animate-float-medium top-[50%] right-[8%] w-10 h-10 border border-accent/[0.08] rounded-lg rotate-45" style={{ animationDelay: "1s" }} />
+
+      {/* Top edge accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+
+      {/* X Assets — corners only */}
+      <div className="absolute top-4 right-6 pointer-events-none z-0 hidden md:block" style={{ opacity: 0.18 }}>
+        <XBrand variant="stroke" size={48} />
+      </div>
+      <div className="absolute bottom-6 left-6 pointer-events-none z-0 hidden md:block">
+        <SmallStaticX size={24} opacity={0.12} />
+      </div>
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Core Services
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-hero leading-tight">
+            Technology That Drives Growth
+          </h2>
+          <p className="mt-4 text-lg text-hero/60 max-w-xl" style={{ lineHeight: 1.6 }}>
+            Our technology services form the backbone of everything we do —
+            building, optimizing, and automating for results.
+          </p>
+        </FadeIn>
+
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {CORE_SERVICES.map((service, i) => (
+            <FadeIn key={service.id} delay={i * 0.12} as="article">
+              <Card3D className="h-full">
+                <MouseShine className="h-full">
+                  <Link
+                    href={`/services#${service.id}`}
+                    className="group relative block h-full rounded-2xl bg-white p-8 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10 hover:border-accent/20"
+                    style={{
+                      border: "1px solid rgba(0,0,0,0.06)",
+                      boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
+                      borderRadius: 16,
+                    }}
+                  >
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="relative">
+                      <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_24px_rgba(123,47,190,0.3)]">
+                        {CORE_ICONS[service.id]}
+                      </div>
+                      <h3 className="mt-6 text-xl font-bold text-hero group-hover:text-accent transition-colors">
+                        {service.name}
+                      </h3>
+                      <p className="mt-3 text-sm text-hero/50 leading-relaxed">
+                        {service.description}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        Learn More <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                      </span>
+                    </div>
+                  </Link>
+                </MouseShine>
+              </Card3D>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── More Services (Design & Marketing) ───────────────── */
+
+const MORE_ICONS: Record<string, React.ReactNode> = {
+  "brand-strategy": <Palette size={20} aria-hidden="true" />,
+  "logo-design": <PenTool size={20} aria-hidden="true" />,
+  "digital-marketing": <BarChart3 size={20} aria-hidden="true" />,
+  "social-media-marketing": <Megaphone size={20} aria-hidden="true" />,
+  "marketing-campaigns": <Layers size={20} aria-hidden="true" />,
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  Design: "bg-purple-500/20 text-purple-300 border border-purple-500/20",
+  Marketing: "bg-blue-500/20 text-blue-300 border border-blue-500/20",
+};
+
+function MoreServices() {
+  return (
+    <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
+      {/* Gradient mesh background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-700/[0.04] rounded-full blur-[100px]" />
+      </div>
+
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 grid-lines-dark" />
+
+      {/* Floating 3D elements */}
+      <FloatingShape
+        className="animate-float-slow top-[8%] left-[6%] w-20 h-20 border border-white/[0.04] rounded-2xl rotate-12"
+        style={{ animationDelay: "0.5s" }}
+      />
+      <FloatingShape
+        className="animate-float-medium top-[15%] right-[10%] w-14 h-14 bg-gradient-to-br from-accent/10 to-blue-500/10 rounded-xl rotate-[-8deg]"
+        style={{ animationDelay: "2s" }}
+      />
+      <FloatingShape
+        className="animate-float-reverse bottom-[12%] right-[6%] w-24 h-24 border border-accent/[0.06] rounded-full"
+        style={{ animationDelay: "1s" }}
+      />
+      <FloatingShape
+        className="animate-float-slow bottom-[20%] left-[12%] w-8 h-8 bg-white/[0.03] rounded-md rotate-45"
+        style={{ animationDelay: "3s" }}
+      />
+
+      {/* Accent lines */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+
+      {/* X Assets — corners only */}
+      <div className="absolute top-6 right-8 pointer-events-none z-0 hidden md:block" style={{ opacity: 0.35 }}>
+        <XBrand variant="pulse" size={56} />
+      </div>
+      <div className="absolute bottom-8 left-10 pointer-events-none z-0 hidden md:block">
+        <SmallStaticX size={24} opacity={0.15} />
+      </div>
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            More Services
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+            Design & Marketing
+          </h2>
+          <p className="mt-4 text-lg text-white/50 max-w-xl" style={{ lineHeight: 1.6 }}>
+            Complete creative and marketing capabilities to amplify your brand
+            across every channel.
+          </p>
+        </FadeIn>
+
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {MORE_SERVICES.map((service, i) => (
+            <FadeIn key={service.id} delay={i * 0.1} as="article">
+              <Card3D className="h-full">
+                <MouseShine className="h-full">
+                  <Link
+                    href={`/services#${service.id}`}
+                    className="group relative block h-full p-6 hover:bg-white/[0.08] hover:border-accent/30 transition-all duration-500"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderRadius: 16,
+                    }}
+                  >
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 text-white/70 group-hover:text-accent transition-colors">
+                          {MORE_ICONS[service.id]}
+                        </div>
+                        <span
+                          className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
+                            CATEGORY_COLORS[service.category]
+                          }`}
+                        >
+                          {service.category}
+                        </span>
+                      </div>
+                      <h3 className="mt-4 text-lg font-bold text-white group-hover:text-accent transition-colors">
+                        {service.name}
+                      </h3>
+                      <p className="mt-2 text-sm text-white/40 leading-relaxed line-clamp-3">
+                        {service.description}
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                        Learn More <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                      </span>
+                    </div>
+                  </Link>
+                </MouseShine>
+              </Card3D>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Philosophy ───────────────────────────────────────── */
+
+function Philosophy() {
+  return (
+    <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
+      {/* Background depth */}
+      <div className="absolute inset-0 dot-grid-light" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px]" />
+
+      {/* Ambient light orb */}
+      <div
+        className="light-orb"
+        style={{
+          width: 350,
+          height: 350,
+          top: "30%",
+          right: "15%",
+          background: "radial-gradient(ellipse at 60% 40%, rgba(124,58,237,0.04) 0%, transparent 55%)",
+          animationDelay: "-8s",
+        }}
+      />
+
+      {/* Faint grid texture */}
+      <div className="absolute inset-0 faint-grid" />
+
+      {/* Decorative lines */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+
+      {/* Floating geometric shapes */}
+      <FloatingShape className="animate-float-slow top-[10%] right-[8%] w-32 h-32 border border-accent/[0.04] rounded-full" />
+      <FloatingShape className="animate-float-medium bottom-[10%] left-[5%] w-20 h-20 border border-accent/[0.06] rounded-2xl rotate-12" style={{ animationDelay: "1.5s" }} />
+
+      {/* X Assets — corners only */}
+      <div className="absolute top-5 left-5 pointer-events-none z-0 hidden md:block">
+        <SmallStaticX size={20} opacity={0.10} />
+      </div>
+      <div className="absolute bottom-8 right-10 pointer-events-none z-0 hidden md:block" style={{ opacity: 0.15 }}>
+        <XBrand variant="stroke" size={56} />
+      </div>
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Our Approach
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-hero leading-tight">
+            How We Work
+          </h2>
+        </FadeIn>
+
+        <div className="mt-16 space-y-0 divide-y divide-black/5">
+          {PHILOSOPHY_ROWS.map((row, i) => (
+            <FadeIn key={row.label} delay={i * 0.15}>
+              <div className="group grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-10 lg:py-14 hover:bg-accent/[0.02] -mx-6 px-6 rounded-2xl transition-colors duration-500">
+                <div className="lg:col-span-4">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-hero group-hover:text-accent transition-colors duration-300">
+                    {row.label}
+                  </h3>
+                </div>
+                <div className="lg:col-span-8">
+                  <p className="text-base sm:text-lg text-hero/50 max-w-2xl" style={{ lineHeight: 1.6 }}>
+                    {row.description}
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Client Marquee ───────────────────────────────────── */
+
+function ClientMarquee() {
+  const doubled = [...CLIENT_TYPES, ...CLIENT_TYPES];
+
+  return (
+    <section className="relative bg-hero py-16 lg:py-24 overflow-hidden noise-overlay">
+      {/* Depth background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/3 w-[400px] h-[300px] bg-accent/[0.04] rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/3 w-[300px] h-[200px] bg-purple-500/[0.03] rounded-full blur-[100px]" />
+      </div>
+      <div className="absolute inset-0 dot-grid-dark opacity-30" />
+
+      {/* Edge accents */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
+        <FadeIn>
+          <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+            Who We Serve
+          </p>
+          <h2 className="mt-3 text-2xl sm:text-3xl font-black text-white">
+            Built for Every Industry
+          </h2>
+        </FadeIn>
+      </div>
+
+      {/* Row 1: Left to right — service names */}
+      <div
+        className="relative"
+        style={{
+          background: "rgba(255,255,255,0.03)",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          padding: "20px 0",
+        }}
+      >
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-hero to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-hero to-transparent z-10" />
+
+        <motion.div
+          className="flex whitespace-nowrap items-center"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 25,
+              ease: "linear",
+            },
+          }}
+        >
+          {doubled.map((client, i) => (
+            <span
+              key={`${client}-${i}`}
+              className="flex-none flex items-center"
+            >
+              <span
+                className="text-base font-medium text-white/40"
+                style={{ letterSpacing: "0.08em" }}
+              >
+                {client}
+              </span>
+              <span
+                className="mx-4"
+                style={{ color: "#7c3aed", opacity: 0.6, fontSize: "0.75rem" }}
+              >
+                ◆
+              </span>
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+    </section>
+  );
+}
+
+/* ─── CTA Banner ───────────────────────────────────────── */
+
+function CTABanner() {
+  return (
+    <section className="relative bg-hero py-24 lg:py-32 overflow-hidden">
+      {/* Grain noise texture overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          opacity: 0.04,
+        }}
+      />
+
+      {/* Large radial glow behind headline */}
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: 500,
+          height: 300,
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          opacity: 0.6,
+        }}
+      />
+
+      {/* Rich gradient depth */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-purple-600/8 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-blue-500/5 rounded-full blur-[80px]" />
+      </div>
+
+      {/* Grid + dot pattern */}
+      <div className="absolute inset-0 grid-lines-dark opacity-40 z-0" />
+      <div className="absolute inset-0 dot-grid-dark opacity-20 z-0" />
+
+      {/* Floating shapes */}
+      <FloatingShape className="animate-float-slow top-[15%] left-[10%] w-16 h-16 border border-accent/10 rounded-2xl rotate-12" />
+      <FloatingShape className="animate-float-medium bottom-[15%] right-[10%] w-12 h-12 border border-white/[0.04] rounded-full" style={{ animationDelay: "1.5s" }} />
+      <FloatingShape className="animate-float-reverse top-[20%] right-[15%] w-20 h-20 border border-accent/[0.06] rounded-xl rotate-[-6deg]" style={{ animationDelay: "3s" }} />
+
+      {/* Top accent */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent z-0" />
+
+      {/* X Assets — corners only */}
+      <div className="absolute top-6 left-8 pointer-events-none z-0 hidden md:block">
+        <SmallStaticX size={20} opacity={0.15} />
+      </div>
+      <div className="absolute pointer-events-none z-0 hidden md:block" style={{ bottom: -40, right: -40 }}>
+        <XBrand variant="rotate" size={120} opacity={0.25} interactive={false} />
+      </div>
+
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <FadeIn>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white leading-tight">
+            Ready to Build Something Great?
+          </h2>
+          <p className="mt-4 text-lg text-white/50 max-w-xl mx-auto" style={{ lineHeight: 1.6 }}>
+            Let&apos;s talk about your brand, your goals, and how we can get you
+            there faster.
+          </p>
+          <div className="mt-10">
+            <Link
+              href="/contact"
+              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+            >
+              Start Your Project
+              <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Page ─────────────────────────────────────────────── */
+
+export default function HomePage() {
+  return (
+    <>
+      <Hero />
+      <GradientBridge />
+      <CoreServices />
+      <MoreServices />
+      <Philosophy />
+      <ClientMarquee />
+      <CTABanner />
+    </>
+  );
+}
