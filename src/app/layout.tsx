@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import CustomCursor from "@/components/ui/CustomCursor";
+import SchemaMarkup from "@/components/SchemaMarkup";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,26 +23,53 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "DOTxLabs — AI-First Digital Agency | Toronto / GTA",
+    default:
+      "Web Design Toronto | AI-First Digital Agency — DOTxLabs",
     template: "%s | DOTxLabs",
   },
   description:
-    "DOTxLabs is an AI-first full-service digital agency in Toronto/GTA. We deliver brand strategy, digital marketing, web development, and AI automation for brands that mean business.",
+    "Toronto web design & digital agency powered by AI. Custom websites, SEO, Shopify & automation for GTA businesses. Get a free quote today.",
   metadataBase: new URL("https://www.dotxlabs.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "DOTxLabs — AI-First Digital Agency",
+    title: "Web Design Toronto | AI-First Digital Agency — DOTxLabs",
     description:
-      "Full-service digital agency delivering design, marketing, and technology for brands across the GTA.",
+      "Toronto web design & digital agency powered by AI. Custom websites, SEO, Shopify & automation for GTA businesses.",
     url: "https://www.dotxlabs.com",
     siteName: "DOTxLabs",
     locale: "en_CA",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DOTxLabs — AI-First Digital Agency in Toronto",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DOTxLabs — AI-First Digital Agency",
+    title: "Web Design Toronto | AI-First Digital Agency — DOTxLabs",
     description:
-      "Full-service digital agency delivering design, marketing, and technology for brands across the GTA.",
+      "Toronto web design & digital agency powered by AI. Custom websites, SEO, Shopify & automation for GTA businesses.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "PASTE_YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE_HERE",
   },
 };
 
@@ -52,6 +80,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${openSans.variable}`}>
+      <head>
+        <SchemaMarkup />
+      </head>
       <body className="font-sans antialiased">
         <MotionConfig reducedMotion="user">
           <SmoothScroll />

@@ -1,0 +1,10 @@
+# DOTxLabs - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.dotxlabs.com/sitemap.xml
+
+# Block internal/API routes
+Disallow: /api/
+Disallow: /_next/
