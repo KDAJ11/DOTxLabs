@@ -52,9 +52,9 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         scrolled
-          ? "bg-hero/80 backdrop-blur-xl border-b border-white/[0.08]"
+          ? "bg-hero/70 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.3)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -68,11 +68,12 @@ export default function Navbar() {
             DOT<span className="text-accent">x</span>Labs
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop nav — Apple-style: lightweight, spaced, lowercase feel */}
+          <div className="hidden lg:flex items-center gap-1">
             <Link
               href="/"
-              className="text-sm text-white/70 hover:text-white transition-colors"
+              className="relative px-4 py-2 text-[13px] font-normal text-white/60 hover:text-white transition-colors duration-300"
+              style={{ letterSpacing: "0.02em" }}
             >
               Home
             </Link>
@@ -85,14 +86,16 @@ export default function Navbar() {
                 onMouseLeave={closeDropdown}
               >
                 <button
-                  className="flex items-center gap-1 text-sm text-white/70 hover:text-white transition-colors py-2"
+                  className="flex items-center gap-1 px-4 py-2 text-[13px] font-normal text-white/60 hover:text-white transition-colors duration-300"
+                  style={{ letterSpacing: "0.02em" }}
                   aria-expanded={activeDropdown === groupName}
                   aria-haspopup="true"
                 >
                   {groupName}
                   <ChevronDown
-                    size={14}
-                    className={`transition-transform ${
+                    size={12}
+                    strokeWidth={1.5}
+                    className={`ml-0.5 transition-transform duration-300 ${
                       activeDropdown === groupName ? "rotate-180" : ""
                     }`}
                   />
@@ -100,20 +103,29 @@ export default function Navbar() {
                 <AnimatePresence>
                   {activeDropdown === groupName && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 pt-2"
+                      initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
                       onMouseEnter={() => openDropdown(groupName)}
                       onMouseLeave={closeDropdown}
                     >
-                      <div className="w-64 rounded-lg bg-hero border border-white/10 p-2 shadow-xl">
+                      <div
+                        className="w-64 rounded-xl p-1.5 shadow-2xl shadow-black/30"
+                        style={{
+                          background: "rgba(20, 20, 22, 0.85)",
+                          backdropFilter: "blur(24px) saturate(1.4)",
+                          WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+                          border: "1px solid rgba(255,255,255,0.08)",
+                        }}
+                      >
                         {items.map((item) => (
                           <Link
                             key={item.href}
                             href={item.href}
-                            className="block rounded-md px-3 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                            className="block rounded-lg px-3.5 py-2.5 text-[13px] font-normal text-white/60 hover:text-white hover:bg-white/[0.06] transition-all duration-200"
+                            style={{ letterSpacing: "0.01em" }}
                           >
                             {item.name}
                           </Link>
@@ -127,14 +139,15 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="text-sm text-white/70 hover:text-white transition-colors"
+              className="px-4 py-2 text-[13px] font-normal text-white/60 hover:text-white transition-colors duration-300"
+              style={{ letterSpacing: "0.02em" }}
             >
               Contact
             </Link>
 
             <Link
               href="/contact"
-              className="ml-2 inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:bg-accent-hover transition-colors min-h-[44px]"
+              className="ml-4 inline-flex items-center justify-center rounded-full bg-accent px-6 py-2 text-[13px] font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[40px] hover:shadow-[0_0_20px_rgba(123,47,190,0.4)]"
             >
               Start Your Project
             </Link>
@@ -159,20 +172,28 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden overflow-hidden bg-hero border-t border-white/5"
+            className="lg:hidden overflow-hidden"
+            style={{
+              background: "rgba(10, 10, 10, 0.95)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+            }}
           >
             <div className="px-4 py-6 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className="block text-base text-white/70 hover:text-white py-2 min-h-[44px]"
+                className="block text-base text-white/60 hover:text-white py-2 min-h-[44px] font-normal"
               >
                 Home
               </Link>
 
               {groups.map(([groupName, items]) => (
                 <div key={groupName}>
-                  <p className="text-xs font-medium text-accent uppercase tracking-widest mb-2">
+                  <p className="text-[11px] font-medium text-accent/80 uppercase mb-2"
+                    style={{ letterSpacing: "0.12em" }}
+                  >
                     {groupName}
                   </p>
                   {items.map((item) => (
@@ -180,7 +201,7 @@ export default function Navbar() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block text-base text-white/70 hover:text-white py-2 pl-3 min-h-[44px]"
+                      className="block text-base text-white/60 hover:text-white py-2 pl-3 min-h-[44px] font-normal"
                     >
                       {item.name}
                     </Link>
@@ -191,7 +212,7 @@ export default function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block text-base text-white/70 hover:text-white py-2 min-h-[44px]"
+                className="block text-base text-white/60 hover:text-white py-2 min-h-[44px] font-normal"
               >
                 Contact
               </Link>

@@ -1,10 +1,10 @@
 export const NAV_SERVICES = {
-  SERVICES: [
+  Services: [
     { name: "Web Development", href: "/services#web-development" },
     { name: "SEO", href: "/services#seo" },
     { name: "AI Automation", href: "/services#ai-automation" },
   ],
-  "MORE SERVICES": [
+  "More Services": [
     { name: "Brand Strategy & Visual Identity", href: "/services#brand-strategy" },
     { name: "Logo Design", href: "/services#logo-design" },
     { name: "Digital Marketing", href: "/services#digital-marketing" },
@@ -180,5 +180,32 @@ export const PHILOSOPHY_ROWS = [
     label: "BUILT FOR GROWTH",
     description:
       "Every deliverable is engineered to scale with your business. We build systems and strategies that compound over time, not quick fixes that expire next quarter.",
+  },
+];
+
+export const PROCESS_STEPS = [
+  {
+    number: "01",
+    title: "Discovery",
+    description:
+      "We dive deep into your brand, audience, and goals. Through research and strategy sessions, we map the landscape and identify your biggest opportunities.",
+  },
+  {
+    number: "02",
+    title: "Strategy",
+    description:
+      "We craft a tailored roadmap that aligns design, marketing, and technology around your objectives. Every decision is backed by data and informed by experience.",
+  },
+  {
+    number: "03",
+    title: "Build",
+    description:
+      "Our team brings the strategy to life — designing, developing, and iterating with precision. AI tools accelerate our workflow without sacrificing quality.",
+  },
+  {
+    number: "04",
+    title: "Launch & Scale",
+    description:
+      "We deploy, measure, and optimize. Post-launch, we continuously refine performance to ensure your investment compounds over time.",
   },
 ];

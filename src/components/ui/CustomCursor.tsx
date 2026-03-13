@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
@@ -8,18 +8,8 @@ export default function CustomCursor() {
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
-  const [hovering, setHovering] = useState(false);
-  const [clicking, setClicking] = useState(false);
+  const hoveringRef = useRef(false);
   const [hidden, setHidden] = useState(true);
-
-  const onMove = useCallback((e: MouseEvent) => {
-    mouse.current.x = e.clientX;
-    mouse.current.y = e.clientY;
-    if (hidden) setHidden(false);
-    if (dotRef.current) {
-      dotRef.current.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
-    }
-  }, [hidden]);
 
   useEffect(() => {
     // Hide on touch devices
@@ -29,33 +19,64 @@ export default function CustomCursor() {
 
     setHidden(false);
 
+    // Ring size constants
+    const RING_DEFAULT = 32;
+    const RING_HOVER = 52;
+
     const animate = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.1;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.1;
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.12;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.12;
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x - 16}px, ${ring.current.y - 16}px)`;
+        const size = hoveringRef.current ? RING_HOVER : RING_DEFAULT;
+        const half = size / 2;
+        ringRef.current.style.transform = `translate(${ring.current.x - half}px, ${ring.current.y - half}px)`;
       }
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    // Hover detection
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+      }
+    };
+
+    // Hover detection — use closest() for robust parent matching
+    const isInteractive = (el: HTMLElement) =>
+      !!el.closest('a, button, [data-cursor="pointer"]');
+
     const onEnter = (e: Event) => {
       const el = e.target as HTMLElement;
-      if (el.matches('a, button, [data-cursor="pointer"], a *, button *, [data-cursor="pointer"] *')) {
-        setHovering(true);
+      if (isInteractive(el)) {
+        hoveringRef.current = true;
+        if (ringRef.current) ringRef.current.dataset.hover = "true";
+        if (dotRef.current) dotRef.current.dataset.hover = "true";
       }
     };
     const onLeave = (e: Event) => {
       const el = e.target as HTMLElement;
-      if (el.matches('a, button, [data-cursor="pointer"], a *, button *, [data-cursor="pointer"] *')) {
-        setHovering(false);
+      if (isInteractive(el)) {
+        hoveringRef.current = false;
+        if (ringRef.current) ringRef.current.dataset.hover = "false";
+        if (dotRef.current) dotRef.current.dataset.hover = "false";
       }
     };
 
-    const onDown = () => setClicking(true);
-    const onUp = () => setClicking(false);
-    const onOut = () => setHidden(true);
-    const onOver = () => setHidden(false);
+    const onDown = () => {
+      if (ringRef.current) ringRef.current.dataset.click = "true";
+    };
+    const onUp = () => {
+      if (ringRef.current) ringRef.current.dataset.click = "false";
+    };
+    const onOut = () => {
+      if (dotRef.current) dotRef.current.style.opacity = "0";
+      if (ringRef.current) ringRef.current.style.opacity = "0";
+    };
+    const onOver = () => {
+      if (dotRef.current) dotRef.current.style.opacity = "1";
+      if (ringRef.current) ringRef.current.style.opacity = "1";
+    };
 
     window.addEventListener("mousemove", onMove);
     document.addEventListener("mouseover", onEnter);
@@ -85,7 +106,7 @@ export default function CustomCursor() {
       document.documentElement.style.cursor = "";
       style.remove();
     };
-  }, [onMove]);
+  }, []);
 
   // Don't render on touch / reduced-motion (checked in effect, but also SSR-safe)
   if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return null;
@@ -95,6 +116,8 @@ export default function CustomCursor() {
       {/* Dot */}
       <div
         ref={dotRef}
+        className="cursor-dot"
+        data-hover="false"
         style={{
           position: "fixed",
           top: 0,
@@ -106,7 +129,7 @@ export default function CustomCursor() {
           mixBlendMode: "difference",
           pointerEvents: "none",
           zIndex: 9999,
-          opacity: hidden ? 0 : hovering ? 0 : 1,
+          opacity: hidden ? 0 : 1,
           transition: "opacity 0.2s ease",
           willChange: "transform",
         }}
@@ -114,25 +137,22 @@ export default function CustomCursor() {
       {/* Ring */}
       <div
         ref={ringRef}
+        className="cursor-ring"
+        data-hover="false"
+        data-click="false"
         style={{
           position: "fixed",
           top: 0,
           left: 0,
-          width: hovering ? 52 : 32,
-          height: hovering ? 52 : 32,
+          width: 32,
+          height: 32,
           borderRadius: "50%",
-          border: hovering
-            ? "1.5px solid rgba(124,58,237,0.6)"
-            : "1.5px solid rgba(255,255,255,0.5)",
-          background: hovering ? "rgba(124,58,237,0.12)" : "transparent",
+          border: "1.5px solid rgba(255,255,255,0.5)",
+          background: "transparent",
           pointerEvents: "none",
           zIndex: 9999,
           opacity: hidden ? 0 : 1,
-          scale: clicking ? "0.75" : "1",
-          transition: "width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease, scale 0.12s ease",
           willChange: "transform",
-          marginLeft: hovering ? -10 : 0,
-          marginTop: hovering ? -10 : 0,
         }}
       />
     </>

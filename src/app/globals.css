@@ -351,6 +351,28 @@ body {
   z-index: 1;
 }
 
+/* ─── Custom Cursor States ────────────────────────────── */
+.cursor-ring {
+  transition: width 0.25s cubic-bezier(0.22,1,0.36,1),
+              height 0.25s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.25s ease,
+              background 0.25s ease,
+              opacity 0.2s ease,
+              scale 0.12s ease;
+}
+.cursor-ring[data-hover="true"] {
+  width: 52px !important;
+  height: 52px !important;
+  border-color: rgba(124,58,237,0.6);
+  background: rgba(124,58,237,0.12);
+}
+.cursor-dot[data-hover="true"] {
+  opacity: 0 !important;
+}
+.cursor-ring[data-click="true"] {
+  scale: 0.75;
+}
+
 /* ─── Glassmorphism ────────────────────────────────────── */
 .glass {
   background: rgba(255, 255, 255, 0.05);

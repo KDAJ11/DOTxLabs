@@ -6,7 +6,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { ArrowRight, Code2, Search, Bot, Palette, BarChart3, Megaphone, PenTool, Layers } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Card3D from "@/components/Card3D";
-import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS } from "@/lib/data";
+import { CORE_SERVICES, MORE_SERVICES, CLIENT_TYPES, PHILOSOPHY_ROWS, PROCESS_STEPS } from "@/lib/data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
 /* ─── Hooks ───────────────────────────────────────────── */
@@ -385,10 +385,13 @@ function CoreServices() {
                 <MouseShine className="h-full">
                   <Link
                     href={`/services#${service.id}`}
-                    className="group relative block h-full rounded-2xl bg-white p-8 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10 hover:border-accent/20"
+                    className="group relative block h-full rounded-2xl p-8 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10 hover:border-accent/20"
                     style={{
-                      border: "1px solid rgba(0,0,0,0.06)",
-                      boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
+                      background: "rgba(255, 255, 255, 0.65)",
+                      backdropFilter: "blur(20px) saturate(1.3)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.3)",
+                      border: "1px solid rgba(255,255,255,0.8)",
+                      boxShadow: "0 4px 24px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.6)",
                       borderRadius: 16,
                     }}
                   >
@@ -436,8 +439,15 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 function MoreServices() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: moreProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const moreY = useTransform(moreProgress, [0, 1], ["3%", "-3%"]);
+
   return (
-    <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
+    <section ref={sectionRef} className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
       {/* Gradient mesh background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] animate-pulse-glow" />
@@ -445,8 +455,8 @@ function MoreServices() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-700/[0.04] rounded-full blur-[100px]" />
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 grid-lines-dark" />
+      {/* Grid pattern overlay with parallax */}
+      <motion.div className="absolute inset-0 grid-lines-dark" style={{ y: moreY }} />
 
       {/* Floating 3D elements */}
       <FloatingShape
@@ -543,7 +553,7 @@ function MoreServices() {
   );
 }
 
-/* ─── Philosophy ───────────────────────────────────────── */
+/* ─── How We Work (Process) ────────────────────────────── */
 
 function Philosophy() {
   return (
@@ -586,30 +596,81 @@ function Philosophy() {
       <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
-            Our Approach
+            Our Process
           </p>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-hero leading-tight">
             How We Work
           </h2>
+          <p className="mt-4 text-lg text-hero/50 max-w-xl" style={{ lineHeight: 1.6 }}>
+            A proven four-step process that turns vision into measurable results.
+          </p>
         </FadeIn>
 
-        <div className="mt-16 space-y-0 divide-y divide-black/5">
-          {PHILOSOPHY_ROWS.map((row, i) => (
-            <FadeIn key={row.label} delay={i * 0.15}>
-              <div className="group grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-10 lg:py-14 hover:bg-accent/[0.02] -mx-6 px-6 rounded-2xl transition-colors duration-500">
-                <div className="lg:col-span-4">
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-hero group-hover:text-accent transition-colors duration-300">
-                    {row.label}
-                  </h3>
+        {/* Process Steps — numbered cards with connecting line */}
+        <div className="mt-16 relative">
+          {/* Connecting line (desktop only) */}
+          <div className="hidden lg:block absolute top-[60px] left-[calc(12.5%+20px)] right-[calc(12.5%+20px)] h-px bg-gradient-to-r from-accent/20 via-accent/10 to-accent/20" />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {PROCESS_STEPS.map((step, i) => (
+              <FadeIn key={step.number} delay={i * 0.12}>
+                <div className="group relative">
+                  {/* Step number — floating above card */}
+                  <div className="relative z-10 flex items-center justify-center w-12 h-12 mx-auto mb-6 rounded-full bg-accent/10 group-hover:bg-accent group-hover:shadow-[0_8px_24px_rgba(123,47,190,0.3)] transition-all duration-500">
+                    <span className="text-sm font-bold text-accent group-hover:text-white transition-colors duration-300">
+                      {step.number}
+                    </span>
+                  </div>
+
+                  {/* Glass card */}
+                  <div
+                    className="relative rounded-2xl p-6 transition-all duration-500 group-hover:shadow-lg group-hover:shadow-accent/5"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.55)",
+                      backdropFilter: "blur(16px) saturate(1.2)",
+                      WebkitBackdropFilter: "blur(16px) saturate(1.2)",
+                      border: "1px solid rgba(255,255,255,0.7)",
+                      boxShadow: "0 2px 16px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.5)",
+                    }}
+                  >
+                    <h3 className="text-xl font-bold text-hero group-hover:text-accent transition-colors duration-300 text-center">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-sm text-hero/50 leading-relaxed text-center">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="lg:col-span-8">
-                  <p className="text-base sm:text-lg text-hero/50 max-w-2xl" style={{ lineHeight: 1.6 }}>
-                    {row.description}
-                  </p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+
+        {/* Philosophy pillars below */}
+        <div className="mt-24 pt-16 border-t border-black/5">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
+              Our Philosophy
+            </p>
+          </FadeIn>
+          <div className="mt-10 space-y-0 divide-y divide-black/5">
+            {PHILOSOPHY_ROWS.map((row, i) => (
+              <FadeIn key={row.label} delay={i * 0.15}>
+                <div className="group grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-10 lg:py-14 hover:bg-accent/[0.02] -mx-6 px-6 rounded-2xl transition-colors duration-500">
+                  <div className="lg:col-span-4">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-hero group-hover:text-accent transition-colors duration-300">
+                      {row.label}
+                    </h3>
+                  </div>
+                  <div className="lg:col-span-8">
+                    <p className="text-base sm:text-lg text-hero/50 max-w-2xl" style={{ lineHeight: 1.6 }}>
+                      {row.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </div>
     </section>
