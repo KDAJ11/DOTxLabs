@@ -54,7 +54,7 @@ export default function Navbar() {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         scrolled
-          ? "bg-hero/70 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.3)]"
+          ? "bg-hero/70 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.3)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -190,9 +190,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="lg:hidden overflow-hidden"
             style={{
-              background: "rgba(10, 10, 10, 0.95)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
+              background: "rgba(10, 10, 10, 0.98)",
               borderTop: "1px solid rgba(255,255,255,0.05)",
             }}
           >

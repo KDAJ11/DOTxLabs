@@ -171,7 +171,7 @@ export default function ServicePageClient({ data }: { data: ServicePageData }) {
           >
             <div className="absolute inset-0">
               <div
-                className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] animate-pulse-glow"
+                className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] ambient-orb animate-pulse-glow"
                 style={{ animationDelay: `${i}s` }}
               />
             </div>
@@ -217,14 +217,14 @@ export default function ServicePageClient({ data }: { data: ServicePageData }) {
         {data.sections.length % 2 === 0 ? (
           <>
             <div className="absolute inset-0 dot-grid-dark opacity-20" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] animate-pulse-glow" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] ambient-orb animate-pulse-glow" />
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
           </>
         ) : (
           <>
             <div className="absolute inset-0 dot-grid-light" />
             <div className="absolute inset-0 faint-grid" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px] ambient-orb" />
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
           </>
         )}

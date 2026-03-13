@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Inter, Open_Sans } from "next/font/google";
-import { MotionConfig } from "motion/react";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
-import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
-import CustomCursor from "@/components/ui/CustomCursor";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import "./globals.css";
+
+/* Dynamic imports — these are desktop-only or non-critical, so skip SSR */
+const SmoothScroll = dynamic(() => import("@/components/SmoothScroll"), { ssr: false });
+const ScrollProgressBar = dynamic(() => import("@/components/ui/ScrollProgressBar"), { ssr: false });
+const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), { ssr: false });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -84,14 +86,12 @@ export default function RootLayout({
         <SchemaMarkup />
       </head>
       <body className="font-sans antialiased">
-        <MotionConfig reducedMotion="user">
-          <SmoothScroll />
-          <CustomCursor />
-          <ScrollProgressBar />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </MotionConfig>
+        <SmoothScroll />
+        <CustomCursor />
+        <ScrollProgressBar />
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

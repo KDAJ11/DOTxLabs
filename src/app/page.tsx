@@ -268,7 +268,7 @@ function Hero() {
           className="mt-12 pt-8 border-t border-white/[0.06] grid grid-cols-3 gap-8 max-w-lg mx-auto"
         >
           <div className="text-center">
-            <span ref={stat1.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+            <span ref={stat1.ref} className="block text-3xl sm:text-4xl font-display font-black text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
               {stat1.value}+
             </span>
             <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
@@ -276,7 +276,7 @@ function Hero() {
             </span>
           </div>
           <div className="text-center">
-            <span ref={stat2.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+            <span ref={stat2.ref} className="block text-3xl sm:text-4xl font-display font-black text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
               {stat2.value}&times;
             </span>
             <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
@@ -284,7 +284,7 @@ function Hero() {
             </span>
           </div>
           <div className="text-center">
-            <span ref={stat3.ref} className="block text-3xl sm:text-4xl font-display font-black text-white">
+            <span ref={stat3.ref} className="block text-3xl sm:text-4xl font-display font-black text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
               {stat3.value}%
             </span>
             <span className="block mt-1 text-[0.7rem] uppercase text-white/40 font-semibold" style={{ letterSpacing: "0.1em" }}>
@@ -327,8 +327,8 @@ function CoreServices() {
     <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
       {/* Depth background */}
       <div className="absolute inset-0 dot-grid-light" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-400/[0.03] rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[120px] ambient-orb -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-400/[0.03] rounded-full blur-[100px] ambient-orb translate-y-1/3 -translate-x-1/4" />
 
       {/* Ambient light orb */}
       <div
@@ -450,9 +450,9 @@ function MoreServices() {
     <section ref={sectionRef} className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
       {/* Gradient mesh background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-700/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] ambient-orb animate-pulse-glow" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[130px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-700/[0.04] rounded-full blur-[100px] ambient-orb" />
       </div>
 
       {/* Grid pattern overlay with parallax */}
@@ -560,7 +560,7 @@ function Philosophy() {
     <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
       {/* Background depth */}
       <div className="absolute inset-0 dot-grid-light" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px] ambient-orb" />
 
       {/* Ambient light orb */}
       <div
@@ -686,8 +686,8 @@ function ClientMarquee() {
     <section className="relative bg-hero py-16 lg:py-24 overflow-hidden noise-overlay">
       {/* Depth background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/3 w-[400px] h-[300px] bg-accent/[0.04] rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/3 w-[300px] h-[200px] bg-purple-500/[0.03] rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/3 w-[400px] h-[300px] bg-accent/[0.04] rounded-full blur-[120px] ambient-orb" />
+        <div className="absolute bottom-0 right-1/3 w-[300px] h-[200px] bg-purple-500/[0.03] rounded-full blur-[100px] ambient-orb" />
       </div>
       <div className="absolute inset-0 dot-grid-dark opacity-30" />
 
@@ -806,7 +806,7 @@ function FAQSection() {
     <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 dot-grid-light" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.02] rounded-full blur-[120px] ambient-orb" />
       <div className="absolute inset-0 faint-grid" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
 
@@ -839,8 +839,8 @@ function WhyDOTxLabs() {
   return (
     <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-purple-600/[0.04] rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "3s" }} />
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] ambient-orb animate-pulse-glow" />
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-purple-600/[0.04] rounded-full blur-[100px] ambient-orb animate-pulse-glow" style={{ animationDelay: "3s" }} />
       </div>
       <div className="absolute inset-0 dot-grid-dark opacity-30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -890,7 +890,7 @@ function ResultsSection() {
   return (
     <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 dot-grid-light" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.02] rounded-full blur-[120px] ambient-orb" />
       <div className="absolute inset-0 faint-grid" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
 
@@ -942,8 +942,8 @@ function IndustriesSection() {
   return (
     <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px]" />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-blue-600/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] ambient-orb" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-blue-600/[0.04] rounded-full blur-[100px] ambient-orb" />
       </div>
       <div className="absolute inset-0 dot-grid-dark opacity-30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -1021,9 +1021,9 @@ function CTABanner() {
 
       {/* Rich gradient depth */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-purple-600/8 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
-        <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-blue-500/5 rounded-full blur-[80px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] ambient-orb animate-pulse-glow" />
+        <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-purple-600/8 rounded-full blur-[100px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-blue-500/5 rounded-full blur-[80px] ambient-orb" />
       </div>
 
       {/* Grid + dot pattern */}

@@ -192,7 +192,7 @@ export default function LocationPageClient({
           >
             <div className="absolute inset-0">
               <div
-                className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] animate-pulse-glow"
+                className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] ambient-orb animate-pulse-glow"
                 style={{ animationDelay: `${i}s` }}
               />
             </div>
@@ -235,7 +235,7 @@ export default function LocationPageClient({
       <section className="relative bg-content py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 dot-grid-light" />
         <div className="absolute inset-0 faint-grid" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px] ambient-orb" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
 
         <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

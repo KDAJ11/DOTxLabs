@@ -1,25 +1,44 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "@studio-freight/lenis";
 
 export default function SmoothScroll() {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
+    // Skip on mobile / touch devices — native scroll is better and saves battery
+    if (window.matchMedia("(hover: none)").matches) return;
+    if (window.innerWidth < 768) return;
 
-    function raf(time: number) {
-      lenis.raf(time);
+    let mounted = true;
+
+    (async () => {
+      const { default: Lenis } = await import("@studio-freight/lenis");
+      if (!mounted) return;
+
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+
+      function raf(time: number) {
+        if (!mounted) return;
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
       requestAnimationFrame(raf);
-    }
 
-    requestAnimationFrame(raf);
+      // Store cleanup
+      (window as unknown as Record<string, unknown>).__lenis_cleanup = () => {
+        mounted = false;
+        lenis.destroy();
+      };
+    })();
 
     return () => {
-      lenis.destroy();
+      mounted = false;
+      const cleanup = (window as unknown as Record<string, unknown>).__lenis_cleanup as (() => void) | undefined;
+      if (cleanup) cleanup();
     };
   }, []);
 
