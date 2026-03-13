@@ -17,6 +17,10 @@ module.exports = {
       "/services/ai-automation",
       "/services/digital-marketing",
       "/services/brand-strategy",
+      "/locations/oshawa",
+      "/locations/pickering",
+      "/locations/ajax",
+      "/locations/whitby",
     ];
 
     let priority = config.priority;

@@ -53,22 +53,29 @@ export default function Footer() {
 
           <div>
             <h3 className="text-xs font-semibold uppercase text-accent mb-4" style={{ letterSpacing: "0.15em" }}>
-              More Services
+              Locations
             </h3>
             <ul className="space-y-3">
-              {Object.values(NAV_SERVICES)
-                .flat()
-                .slice(5)
-                .map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="footer-link text-sm text-white/50 hover:text-white transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
+              <li>
+                <Link href="/locations/oshawa" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Oshawa
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/pickering" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Pickering
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/ajax" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Ajax
+                </Link>
+              </li>
+              <li>
+                <Link href="/locations/whitby" className="footer-link text-sm text-white/50 hover:text-white transition-colors">
+                  Whitby
+                </Link>
+              </li>
             </ul>
           </div>
 
