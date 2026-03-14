@@ -19,6 +19,39 @@ function useIsTouchDevice() {
   return isTouch;
 }
 
+function useMouseParallax(strength = 20) {
+  const x = useRef(0);
+  const y = useRef(0);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const isTouch = useIsTouchDevice();
+
+  useEffect(() => {
+    if (isTouch) return;
+
+    const onMove = (e: MouseEvent) => {
+      x.current = (e.clientX / window.innerWidth - 0.5) * 2;
+      y.current = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+
+    // Throttle updates to ~30fps to stay performant
+    const interval = setInterval(() => {
+      setPos(prev => {
+        const nx = prev.x + (x.current * strength - prev.x) * 0.08;
+        const ny = prev.y + (y.current * strength - prev.y) * 0.08;
+        return { x: nx, y: ny };
+      });
+    }, 33);
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      clearInterval(interval);
+    };
+  }, [isTouch, strength]);
+
+  return pos;
+}
+
 function useCountUp(target: number, duration = 1500) {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -135,6 +168,9 @@ function Hero() {
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 500], [0, -80]);
 
+  // Mouse parallax for hero shapes (desktop only)
+  const mouse = useMouseParallax(25);
+
   // Stats count-up
   const stat1 = useCountUp(50);
   const stat2 = useCountUp(3);
@@ -146,54 +182,133 @@ function Hero() {
       <div className="hero-orb-1" />
       <div className="hero-orb-2" />
 
-      {/* Animated gradient mesh parallax layer */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      {/* Animated gradient mesh parallax layer — mouse + scroll */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          y: bgY,
+          x: mouse.x,
+          translateY: mouse.y,
+        }}
+      >
         {/* Dot grid pattern with radial mask */}
         <div
-          className="absolute inset-0 dot-grid-dark opacity-50"
+          className="absolute inset-0 dot-grid-dark opacity-60"
           style={{
             maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
             WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
           }}
         />
 
-        {/* Orbiting ring */}
+        {/* Orbiting ring with dot */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]">
-          <div className="absolute inset-0 border border-white/[0.03] rounded-full" />
+          <div className="absolute inset-0 border border-white/[0.06] rounded-full" />
           <div className="animate-orbit">
-            <div className="w-2 h-2 rounded-full bg-accent/40 blur-[2px]" />
+            <div className="w-2 h-2 rounded-full bg-accent/50 blur-[2px]" />
           </div>
         </div>
 
-        {/* Concentric depth rings */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-white/[0.02] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-white/[0.015] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-white/[0.01] rounded-full" />
+        {/* Concentric depth rings — brighter for visibility */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-white/[0.05] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-white/[0.035] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] border border-white/[0.02] rounded-full" />
 
-        {/* Floating 3D geometric shapes */}
+        {/* 3D Torus / Ring shapes — perspective rings with gradient strokes */}
+        <div
+          className="absolute top-[12%] right-[8%] w-32 h-32 animate-float-slow"
+          style={{ perspective: 400 }}
+        >
+          <div
+            className="w-full h-full rounded-full border-2 border-accent/25"
+            style={{ transform: "rotateX(65deg) rotateZ(15deg)" }}
+          />
+        </div>
+
+        <div
+          className="absolute bottom-[18%] left-[6%] w-40 h-40 animate-float-reverse"
+          style={{ perspective: 500, animationDelay: "2s" }}
+        >
+          <div
+            className="w-full h-full rounded-full border border-purple-400/20"
+            style={{ transform: "rotateX(70deg) rotateZ(-20deg)" }}
+          />
+          <div
+            className="absolute inset-4 rounded-full border border-accent/15"
+            style={{ transform: "rotateX(70deg) rotateZ(-20deg)" }}
+          />
+        </div>
+
+        <div
+          className="absolute top-[55%] right-[5%] w-24 h-24 animate-float-medium"
+          style={{ perspective: 300, animationDelay: "1.5s" }}
+        >
+          <div
+            className="w-full h-full rounded-full border border-white/[0.08]"
+            style={{ transform: "rotateX(60deg) rotateZ(30deg)" }}
+          />
+        </div>
+
+        {/* X shapes — SVG crosses scattered in the hero */}
+        <div className="absolute top-[18%] left-[15%] animate-float-medium" style={{ animationDelay: "0.5s" }}>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="opacity-20">
+            <line x1="4" y1="4" x2="24" y2="24" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
+            <line x1="24" y1="4" x2="4" y2="24" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        <div className="absolute bottom-[22%] right-[18%] animate-float-slow" style={{ animationDelay: "3s" }}>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="opacity-15">
+            <line x1="3" y1="3" x2="19" y2="19" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
+            <line x1="19" y1="3" x2="3" y2="19" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        <div className="absolute top-[40%] left-[5%] animate-float-reverse" style={{ animationDelay: "1s" }}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="opacity-12">
+            <line x1="2" y1="2" x2="16" y2="16" stroke="#c084fc" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="16" y1="2" x2="2" y2="16" stroke="#c084fc" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        <div className="absolute top-[70%] right-[25%] animate-float-medium" style={{ animationDelay: "4s" }}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-10">
+            <line x1="2" y1="2" x2="12" y2="12" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="12" y1="2" x2="2" y2="12" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        {/* Floating geometric shapes — brighter accents */}
         <FloatingShape
-          className="animate-float-slow top-[15%] left-[10%] w-16 h-16 border border-accent/20 rounded-lg rotate-45"
+          className="animate-float-slow top-[15%] left-[10%] w-16 h-16 border border-accent/25 rounded-lg rotate-45"
           style={{ animationDelay: "0s" }}
         />
         <FloatingShape
-          className="animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full"
+          className="animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/15 to-purple-500/15 rounded-full"
           style={{ animationDelay: "1s" }}
         />
         <FloatingShape
-          className="animate-float-reverse bottom-[25%] left-[8%] w-20 h-20 border border-white/[0.05] rounded-2xl"
+          className="animate-float-reverse bottom-[25%] left-[8%] w-20 h-20 border border-white/[0.08] rounded-2xl"
           style={{ animationDelay: "3s" }}
         />
         <FloatingShape
-          className="animate-float-slow bottom-[20%] right-[12%] w-8 h-8 bg-accent/15 rounded-md rotate-12"
+          className="animate-float-slow bottom-[20%] right-[12%] w-8 h-8 bg-accent/20 rounded-md rotate-12"
           style={{ animationDelay: "2s" }}
         />
         <FloatingShape
-          className="animate-float-medium top-[60%] left-[25%] w-6 h-6 border border-accent/15 rounded-full"
+          className="animate-float-medium top-[60%] left-[25%] w-6 h-6 border border-accent/20 rounded-full"
           style={{ animationDelay: "4s" }}
         />
 
+        {/* 3D tilted ring — large, behind text */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none" style={{ perspective: 800 }}>
+          <div
+            className="w-full h-full rounded-full border border-accent/[0.08] animate-rotate-slow"
+            style={{ transform: "rotateX(75deg)" }}
+          />
+        </div>
+
         {/* Top gradient line accent */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
       </motion.div>
 
       {/* X Brand — Glass & Scatter */}
@@ -227,21 +342,19 @@ function Hero() {
           </h1>
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: EASE_EXPO }}
+        {/* No animation on subtitle — this is the LCP element, must be visible on first paint */}
+        <p
           className="mt-6 text-lg sm:text-xl text-white/60 max-w-2xl mx-auto"
           style={{ lineHeight: 1.6 }}
         >
           Toronto web design agency powered by AI. Custom websites, SEO,
           Shopify stores, and automation for businesses across the GTA.
-        </motion.p>
+        </p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85, ease: EASE_EXPO }}
+          transition={{ duration: 0.5, delay: 0.4, ease: EASE_EXPO }}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Link
@@ -262,9 +375,9 @@ function Hero() {
 
         {/* Stats counter row */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.1, ease: EASE_EXPO }}
+          transition={{ duration: 0.5, delay: 0.6, ease: EASE_EXPO }}
           className="mt-12 pt-8 border-t border-white/[0.06] grid grid-cols-3 gap-8 max-w-lg mx-auto"
         >
           <div className="text-center">
@@ -308,7 +421,7 @@ function GradientBridge() {
       className="w-full"
       style={{
         height: 120,
-        background: "linear-gradient(to bottom, #0a0a0a, #f8f8f8)",
+        background: "linear-gradient(to bottom, #14121e, #f8f8f8)",
       }}
     />
   );

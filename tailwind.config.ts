@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        hero: "#0a0a0a",
+        hero: "#14121e",
         content: "#fafafa",
         accent: "#7B2FBE",
         "accent-hover": "#6A24A8",

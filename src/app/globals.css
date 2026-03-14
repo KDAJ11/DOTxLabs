@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --hero-bg: #0a0a0a;
+  --hero-bg: #14121e;
   --content-bg: #fafafa;
   --accent: #7B2FBE;
   --accent-hover: #6A24A8;
@@ -104,11 +104,11 @@ body {
 .hero-mesh {
   background: linear-gradient(
     135deg,
-    #0a0a0a 0%,
-    #0f0a1a 25%,
-    #0a0a0a 50%,
-    #100820 75%,
-    #0a0a0a 100%
+    #14121e 0%,
+    #1a1528 25%,
+    #161222 50%,
+    #1e1630 75%,
+    #14121e 100%
   );
   background-size: 400% 400%;
 }
@@ -137,7 +137,7 @@ body {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
@@ -156,7 +156,7 @@ body {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
