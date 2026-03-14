@@ -9,7 +9,7 @@ import type { BlogPost } from "@/lib/blog-data";
 const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Web Design": "bg-purple-500/20 text-purple-300 border border-purple-500/20",
+  "Web Design": "bg-accent/20 text-gold border border-accent/20",
   SEO: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/20",
   Marketing: "bg-blue-500/20 text-blue-300 border border-blue-500/20",
 };
@@ -105,8 +105,8 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
             <div
               className="mt-16 rounded-2xl p-8 text-center"
               style={{
-                background: "rgba(124, 58, 237, 0.06)",
-                border: "1px solid rgba(124, 58, 237, 0.15)",
+                background: "rgba(123, 53, 255, 0.06)",
+                border: "1px solid rgba(123, 53, 255, 0.15)",
               }}
             >
               <p className="text-lg font-semibold text-hero">

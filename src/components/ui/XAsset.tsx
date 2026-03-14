@@ -38,7 +38,7 @@ export function XGlassCard({ className = "" }: { className?: string }) {
           top: 20,
           left: 20,
           background:
-            "radial-gradient(circle, rgba(124,58,237,0.12), transparent)",
+            "radial-gradient(circle, rgba(123,53,255,0.12), transparent)",
           filter: "blur(60px)",
           pointerEvents: "none",
         }}
@@ -55,7 +55,7 @@ export function XGlassCard({ className = "" }: { className?: string }) {
           y1="60"
           x2="260"
           y2="260"
-          stroke="rgba(147,51,234,0.15)"
+          stroke="rgba(123,53,255,0.15)"
           strokeWidth="28"
           strokeLinecap="round"
         />
@@ -64,7 +64,7 @@ export function XGlassCard({ className = "" }: { className?: string }) {
           y1="60"
           x2="60"
           y2="260"
-          stroke="rgba(147,51,234,0.15)"
+          stroke="rgba(123,53,255,0.15)"
           strokeWidth="28"
           strokeLinecap="round"
         />
@@ -92,7 +92,7 @@ export function XOrbit({ className = "" }: { className?: string }) {
         viewBox="0 0 120 120"
         fill="none"
         className="absolute inset-0"
-        style={{ filter: "drop-shadow(0 0 8px rgba(124,58,237,0.4))" }}
+        style={{ filter: "drop-shadow(0 0 8px rgba(123,53,255,0.4))" }}
       >
         <motion.g
           animate={reduced ? {} : { rotate: -360 }}
@@ -108,7 +108,7 @@ export function XOrbit({ className = "" }: { className?: string }) {
             y1="30"
             x2="90"
             y2="90"
-            stroke="#7c3aed"
+            stroke="#7B35FF"
             strokeWidth="3"
             strokeLinecap="round"
           />
@@ -117,7 +117,7 @@ export function XOrbit({ className = "" }: { className?: string }) {
             y1="30"
             x2="30"
             y2="90"
-            stroke="#7c3aed"
+            stroke="#7B35FF"
             strokeWidth="3"
             strokeLinecap="round"
           />
@@ -133,7 +133,7 @@ export function XOrbit({ className = "" }: { className?: string }) {
             width: 4,
             height: 4,
             borderRadius: "50%",
-            background: "#a855f7",
+            background: "#7B35FF",
             top: "50%",
             left: "50%",
             marginTop: -2,
@@ -161,7 +161,7 @@ export function XOrbit({ className = "" }: { className?: string }) {
               width: 4,
               height: 4,
               borderRadius: "50%",
-              background: "#a855f7",
+              background: "#7B35FF",
             }}
           />
         </motion.div>
@@ -196,7 +196,7 @@ export function XPulse({
           height: size * 0.6,
           marginTop: -(size * 0.3),
           marginLeft: -(size * 0.3),
-          border: "2px solid rgba(124,58,237,0.3)",
+          border: "2px solid rgba(123,53,255,0.3)",
           borderRadius: "50%",
         }}
         animate={
@@ -223,7 +223,7 @@ export function XPulse({
           height: size * 0.6,
           marginTop: -(size * 0.3),
           marginLeft: -(size * 0.3),
-          border: "2px solid rgba(124,58,237,0.3)",
+          border: "2px solid rgba(123,53,255,0.3)",
           borderRadius: "50%",
         }}
         animate={
@@ -268,7 +268,7 @@ export function XPulse({
           y1="20"
           x2="60"
           y2="60"
-          stroke="#7c3aed"
+          stroke="#7B35FF"
           strokeWidth="6"
           strokeLinecap="round"
         />
@@ -277,7 +277,7 @@ export function XPulse({
           y1="20"
           x2="20"
           y2="60"
-          stroke="#7c3aed"
+          stroke="#7B35FF"
           strokeWidth="6"
           strokeLinecap="round"
         />
@@ -329,7 +329,7 @@ export function XRotate3D({
 
       // Material
       const material = new THREE.MeshStandardMaterial({
-        color: 0x7c3aed,
+        color: 0x7B35FF,
         metalness: 0.8,
         roughness: 0.2,
       });
@@ -433,7 +433,7 @@ export function XRotate3D({
             y1="15"
             x2="65"
             y2="65"
-            stroke="#7c3aed"
+            stroke="#7B35FF"
             strokeWidth="6"
             strokeLinecap="round"
           />
@@ -442,7 +442,7 @@ export function XRotate3D({
             y1="15"
             x2="15"
             y2="65"
-            stroke="#7c3aed"
+            stroke="#7B35FF"
             strokeWidth="6"
             strokeLinecap="round"
           />
@@ -467,7 +467,7 @@ export function SmallStaticX({
   size = 24,
   opacity = 0.12,
   strokeWidth = 1.5,
-  color = "#7c3aed",
+  color = "#7B35FF",
   className = "",
 }: {
   size?: number;
@@ -575,7 +575,7 @@ export function XScatter({ className = "" }: { className?: string }) {
 export function XStroke({
   size = 48,
   strokeWidth = 4,
-  color = "#7c3aed",
+  color = "#7B35FF",
   className = "",
 }: {
   size?: number;
@@ -606,9 +606,9 @@ export function XStroke({
         glowDone
           ? {
               filter: [
-                "drop-shadow(0 0 0px rgba(124,58,237,0))",
-                "drop-shadow(0 0 8px rgba(124,58,237,0.6))",
-                "drop-shadow(0 0 0px rgba(124,58,237,0))",
+                "drop-shadow(0 0 0px rgba(123,53,255,0))",
+                "drop-shadow(0 0 8px rgba(123,53,255,0.6))",
+                "drop-shadow(0 0 0px rgba(123,53,255,0))",
               ],
             }
           : {}

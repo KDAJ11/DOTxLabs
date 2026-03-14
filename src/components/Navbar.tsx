@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_SERVICES } from "@/lib/data";
@@ -61,11 +62,15 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl font-display font-bold text-white tracking-tight"
-          >
-            DOT<span className="text-accent">x</span>Labs
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/DOTxLabs.png"
+              alt="DOTxLabs"
+              width={160}
+              height={52}
+              className="h-[52px] w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop nav — Apple-style: lightweight, spaced, lowercase feel */}
@@ -163,7 +168,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="ml-4 inline-flex items-center justify-center rounded-full bg-accent px-6 py-2 text-[13px] font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[40px] hover:shadow-[0_0_20px_rgba(123,47,190,0.4)]"
+              className="ml-4 inline-flex items-center justify-center rounded-full bg-accent px-6 py-2 text-[13px] font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[40px] hover:shadow-[0_0_20px_rgba(123,53,255,0.4)]"
             >
               Start Your Project
             </Link>

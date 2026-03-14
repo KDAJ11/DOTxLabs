@@ -83,6 +83,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${openSans.variable}`}>
       <head>
+        <link rel="icon" href="/DOTxLabsF.png" type="image/png" />
+        <link rel="shortcut icon" href="/DOTxLabsF.png" />
+        <link rel="apple-touch-icon" href="/DOTxLabsF.png" />
         <SchemaMarkup />
       </head>
       <body className="font-sans antialiased">

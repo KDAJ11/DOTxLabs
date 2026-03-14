@@ -12,7 +12,7 @@ const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const HERO_WORDS = "Insights & Resources".split(" ");
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Web Design": "bg-purple-500/20 text-purple-300 border border-purple-500/20",
+  "Web Design": "bg-accent/20 text-gold border border-accent/20",
   SEO: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/20",
   Marketing: "bg-blue-500/20 text-blue-300 border border-blue-500/20",
 };

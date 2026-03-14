@@ -92,7 +92,7 @@ export default function ContactPage() {
   }
 
   const fieldClasses =
-    "w-full rounded-lg border border-black/10 bg-white px-4 py-3 text-sm text-hero placeholder:text-hero/30 transition-all duration-200 min-h-[44px] focus:outline-none focus:border-[#7c3aed] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.15)]";
+    "w-full rounded-lg border border-black/10 bg-white px-4 py-3 text-sm text-hero placeholder:text-hero/30 transition-all duration-200 min-h-[44px] focus:outline-none focus:border-[#7B35FF] focus:shadow-[0_0_0_3px_rgba(123,53,255,0.15)]";
 
   // Form fields config for stagger
   const fields = [
@@ -173,7 +173,7 @@ export default function ContactPage() {
             height: 350,
             top: "20%",
             right: "10%",
-            background: "radial-gradient(ellipse at 60% 40%, rgba(124,58,237,0.04) 0%, transparent 55%)",
+            background: "radial-gradient(ellipse at 60% 40%, rgba(123,53,255,0.04) 0%, transparent 55%)",
           }}
         />
 
@@ -393,7 +393,7 @@ export default function ContactPage() {
                     className={`group inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] active:translate-y-[2px] active:scale-[0.98] ${
                       submitState === "success"
                         ? "bg-green-500 hover:bg-green-600"
-                        : "bg-accent hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(124,58,237,0.4)]"
+                        : "bg-accent hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.4)]"
                     }`}
                   >
                     {submitState === "loading" ? (
