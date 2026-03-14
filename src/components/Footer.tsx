@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone } from "lucide-react";
 import { NAV_SERVICES } from "@/lib/data";
 
@@ -10,11 +11,22 @@ export default function Footer() {
         className="absolute top-0 left-0 right-0"
         style={{
           height: 1,
-          background: "linear-gradient(to right, transparent, #7c3aed 30%, #7c3aed 70%, transparent)",
+          background: "linear-gradient(to right, transparent, #7B35FF 30%, #7B35FF 70%, transparent)",
         }}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        {/* Centered logo at top of footer */}
+        <div className="flex justify-center mb-12">
+          <Image
+            src="/DOTxLabs.png"
+            alt="DOTxLabs"
+            width={140}
+            height={44}
+            className="h-[44px] w-auto"
+          />
+        </div>
+
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div>

@@ -11,8 +11,9 @@ const config: Config = {
       colors: {
         hero: "#14121e",
         content: "#fafafa",
-        accent: "#7B2FBE",
-        "accent-hover": "#6A24A8",
+        accent: "#7B35FF",
+        "accent-hover": "#6B2AEF",
+        gold: "#C9A84C",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

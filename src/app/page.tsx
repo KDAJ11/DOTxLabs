@@ -262,15 +262,15 @@ function Hero() {
         {/* X shapes — SVG crosses scattered in the hero */}
         <div className="absolute top-[18%] left-[15%] animate-float-medium" style={{ animationDelay: "0.5s" }}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="opacity-20">
-            <line x1="4" y1="4" x2="24" y2="24" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
-            <line x1="24" y1="4" x2="4" y2="24" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
+            <line x1="4" y1="4" x2="24" y2="24" stroke="#7B35FF" strokeWidth="2" strokeLinecap="round" />
+            <line x1="24" y1="4" x2="4" y2="24" stroke="#7B35FF" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </div>
 
         <div className="absolute bottom-[22%] right-[18%] animate-float-slow" style={{ animationDelay: "3s" }}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="opacity-15">
-            <line x1="3" y1="3" x2="19" y2="19" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
-            <line x1="19" y1="3" x2="3" y2="19" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
+            <line x1="3" y1="3" x2="19" y2="19" stroke="#7B35FF" strokeWidth="2" strokeLinecap="round" />
+            <line x1="19" y1="3" x2="3" y2="19" stroke="#7B35FF" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </div>
 
@@ -283,8 +283,8 @@ function Hero() {
 
         <div className="absolute top-[70%] right-[25%] animate-float-medium" style={{ animationDelay: "4s" }}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-10">
-            <line x1="2" y1="2" x2="12" y2="12" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="12" y1="2" x2="2" y2="12" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="2" y1="2" x2="12" y2="12" stroke="#7B35FF" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="12" y1="2" x2="2" y2="12" stroke="#7B35FF" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </div>
 
@@ -294,7 +294,7 @@ function Hero() {
           style={{ animationDelay: "0s" }}
         />
         <FloatingShape
-          className="animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/15 to-purple-500/15 rounded-full"
+          className="animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/15 to-accent/15 rounded-full"
           style={{ animationDelay: "1s" }}
         />
         <FloatingShape
@@ -370,7 +370,7 @@ function Hero() {
         >
           <Link
             href="/contact"
-            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
           >
             Start Your Project
             <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
@@ -462,7 +462,7 @@ function CoreServices() {
           height: 400,
           top: "20%",
           left: "10%",
-          background: "radial-gradient(ellipse at 20% 60%, rgba(124,58,237,0.05) 0%, transparent 55%)",
+          background: "radial-gradient(ellipse at 20% 60%, rgba(123,53,255,0.05) 0%, transparent 55%)",
         }}
       />
 
@@ -520,10 +520,10 @@ function CoreServices() {
                     }}
                   >
                     {/* Glow effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div className="relative">
-                      <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_24px_rgba(123,47,190,0.3)]">
+                      <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_24px_rgba(123,53,255,0.3)]">
                         {CORE_ICONS[service.id]}
                       </div>
                       <h3 className="mt-6 text-xl font-bold text-hero group-hover:text-accent transition-colors">
@@ -558,7 +558,7 @@ const MORE_ICONS: Record<string, React.ReactNode> = {
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Design: "bg-purple-500/20 text-purple-300 border border-purple-500/20",
+  Design: "bg-accent/20 text-gold border border-accent/20",
   Marketing: "bg-blue-500/20 text-blue-300 border border-blue-500/20",
 };
 
@@ -575,7 +575,7 @@ function MoreServices() {
       {/* Gradient mesh background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] ambient-orb animate-pulse-glow" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[130px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[130px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-700/[0.04] rounded-full blur-[100px] ambient-orb" />
       </div>
 
@@ -694,7 +694,7 @@ function Philosophy() {
           height: 350,
           top: "30%",
           right: "15%",
-          background: "radial-gradient(ellipse at 60% 40%, rgba(124,58,237,0.04) 0%, transparent 55%)",
+          background: "radial-gradient(ellipse at 60% 40%, rgba(123,53,255,0.04) 0%, transparent 55%)",
           animationDelay: "-8s",
         }}
       />
@@ -740,7 +740,7 @@ function Philosophy() {
               <FadeIn key={step.number} delay={i * 0.12}>
                 <div className="group relative">
                   {/* Step number — floating above card */}
-                  <div className="relative z-10 flex items-center justify-center w-12 h-12 mx-auto mb-6 rounded-full bg-accent/10 group-hover:bg-accent group-hover:shadow-[0_8px_24px_rgba(123,47,190,0.3)] transition-all duration-500">
+                  <div className="relative z-10 flex items-center justify-center w-12 h-12 mx-auto mb-6 rounded-full bg-accent/10 group-hover:bg-accent group-hover:shadow-[0_8px_24px_rgba(123,53,255,0.3)] transition-all duration-500">
                     <span className="text-sm font-bold text-accent group-hover:text-white transition-colors duration-300">
                       {step.number}
                     </span>
@@ -811,7 +811,7 @@ function ClientMarquee() {
       {/* Depth background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/3 w-[400px] h-[300px] bg-accent/[0.04] rounded-full blur-[120px] ambient-orb" />
-        <div className="absolute bottom-0 right-1/3 w-[300px] h-[200px] bg-purple-500/[0.03] rounded-full blur-[100px] ambient-orb" />
+        <div className="absolute bottom-0 right-1/3 w-[300px] h-[200px] bg-accent/[0.03] rounded-full blur-[100px] ambient-orb" />
       </div>
       <div className="absolute inset-0 dot-grid-dark opacity-30" />
 
@@ -868,7 +868,7 @@ function ClientMarquee() {
               </span>
               <span
                 className="mx-4"
-                style={{ color: "#7c3aed", opacity: 0.6, fontSize: "0.75rem" }}
+                style={{ color: "#7B35FF", opacity: 0.6, fontSize: "0.75rem" }}
               >
                 ◆
               </span>
@@ -1067,7 +1067,7 @@ function IndustriesSection() {
     <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[130px] ambient-orb" />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-blue-600/[0.04] rounded-full blur-[100px] ambient-orb" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[100px] ambient-orb" />
       </div>
       <div className="absolute inset-0 dot-grid-dark opacity-30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -1137,7 +1137,7 @@ function CTABanner() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, rgba(123,53,255,0.2) 0%, transparent 70%)",
           filter: "blur(80px)",
           opacity: 0.6,
         }}
@@ -1181,7 +1181,7 @@ function CTABanner() {
           <div className="mt-10">
             <Link
               href="/contact"
-              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
             >
               Start Your Project
               <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />

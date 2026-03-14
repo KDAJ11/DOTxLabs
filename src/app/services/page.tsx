@@ -23,13 +23,13 @@ const HERO_WORDS = "Everything Your Brand Needs".split(" ");
 /* ─── Section orb configs per service index ─────────── */
 const DARK_ORB_CONFIGS = [
   // Index 1 (SEO) — top-right, purple, 18s
-  { top: "10%", right: "8%", width: 350, height: 350, color: "rgba(124,58,237,0.15)", duration: "18s" },
+  { top: "10%", right: "8%", width: 350, height: 350, color: "rgba(123,53,255,0.15)", duration: "18s" },
   // Index 3 (Brand Strategy) — centered-right, violet, 20s
   { top: "40%", right: "5%", width: 300, height: 300, color: "rgba(139,92,246,0.12)", duration: "20s" },
   // Index 5 (Digital Marketing) — bottom-left, indigo, 22s
   { bottom: "10%", left: "5%", width: 400, height: 400, color: "rgba(99,102,241,0.12)", duration: "22s" },
   // Index 7 (Marketing Campaigns) — two orbs, 16s/24s
-  { top: "15%", left: "8%", width: 250, height: 250, color: "rgba(124,58,237,0.1)", duration: "16s" },
+  { top: "15%", left: "8%", width: 250, height: 250, color: "rgba(123,53,255,0.1)", duration: "16s" },
 ];
 
 /* ─── Animated service section content ──────────────── */
@@ -87,7 +87,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
           )}
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
           >
             Start Your Project
             <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -299,7 +299,7 @@ export default function ServicesPage() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            background: "radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse, rgba(123,53,255,0.2) 0%, transparent 70%)",
             filter: "blur(80px)",
             opacity: 0.6,
           }}
@@ -324,7 +324,7 @@ export default function ServicesPage() {
             <div className="mt-10">
               <Link
                 href="/contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
               >
                 Start Your Project
                 <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />

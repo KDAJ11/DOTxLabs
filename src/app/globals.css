@@ -5,8 +5,9 @@
 :root {
   --hero-bg: #14121e;
   --content-bg: #fafafa;
-  --accent: #7B2FBE;
-  --accent-hover: #6A24A8;
+  --accent: #7B35FF;
+  --accent-hover: #6B2AEF;
+  --gold: #C9A84C;
 }
 
 * {
@@ -61,14 +62,44 @@ body {
   }
 }
 
+/* ─── Nav Link Hover & Active ────────────────────────── */
+nav a:hover {
+  color: #C9A84C;
+  transition: color 0.2s ease;
+}
+
+nav a.active {
+  color: #C9A84C;
+  border-bottom: 2px solid #C9A84C;
+}
+
+/* ─── Primary Buttons ────────────────────────────────── */
+.btn-primary {
+  background-color: #7B35FF;
+  color: #C9A84C;
+}
+.btn-primary:hover {
+  background-color: #6B2AEF;
+}
+
+/* ─── Section Headings ───────────────────────────────── */
+h1, h2, h3 {
+  color: #7B35FF;
+}
+
+/* ─── Borders / Dividers ─────────────────────────────── */
+hr, .divider {
+  border-color: rgba(201, 168, 76, 0.25);
+}
+
 /* ─── Dot Grid Pattern ─────────────────────────────────── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(123, 47, 190, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(123, 53, 255, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .dot-grid-light {
-  background-image: radial-gradient(circle, rgba(123, 47, 190, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(123, 53, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -80,8 +111,8 @@ body {
 /* ─── Grid Lines Pattern ───────────────────────────────── */
 .grid-lines {
   background-image:
-    linear-gradient(rgba(123, 47, 190, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(123, 47, 190, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(123, 53, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 53, 255, 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -137,7 +168,7 @@ body {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(123,53,255,0.35) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
@@ -156,7 +187,7 @@ body {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(123,53,255,0.3) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
@@ -313,7 +344,7 @@ body {
   left: 0;
   width: 100%;
   height: 1px;
-  background: #7c3aed;
+  background: #7B35FF;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -363,8 +394,8 @@ body {
 .cursor-ring[data-hover="true"] {
   width: 52px !important;
   height: 52px !important;
-  border-color: rgba(124,58,237,0.6);
-  background: rgba(124,58,237,0.12);
+  border-color: rgba(123,53,255,0.6);
+  background: rgba(123,53,255,0.12);
 }
 .cursor-dot[data-hover="true"] {
   opacity: 0 !important;
@@ -391,8 +422,8 @@ body {
 /* ─── Contact Form Focus States ───────────────────────── */
 .form-field:focus {
   outline: none;
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  border-color: #7B35FF;
+  box-shadow: 0 0 0 3px rgba(123, 53, 255, 0.15);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 

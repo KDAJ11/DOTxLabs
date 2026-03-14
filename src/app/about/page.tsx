@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
@@ -47,7 +48,7 @@ export default function AboutPage() {
 
         {/* Floating geometric shapes */}
         <div className="absolute animate-float-slow top-[15%] left-[10%] w-16 h-16 border border-accent/20 rounded-lg rotate-45 pointer-events-none" style={{ animationDelay: "0s" }} />
-        <div className="absolute animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full pointer-events-none" style={{ animationDelay: "1s" }} />
+        <div className="absolute animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-accent/10 rounded-full pointer-events-none" style={{ animationDelay: "1s" }} />
         <div className="absolute animate-float-reverse bottom-[25%] left-[8%] w-20 h-20 border border-white/[0.05] rounded-2xl pointer-events-none" style={{ animationDelay: "3s" }} />
 
         {/* X Assets */}
@@ -130,6 +131,13 @@ export default function AboutPage() {
 
         <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeIn>
+            <Image
+              src="/DOTxLabs.png"
+              alt="DOTxLabs"
+              width={200}
+              height={63}
+              className="max-w-[200px] h-auto mb-8"
+            />
             <p className="text-xs font-semibold uppercase text-accent" style={{ letterSpacing: "0.15em" }}>
               How We Operate
             </p>
@@ -167,7 +175,7 @@ export default function AboutPage() {
       <section className="relative bg-hero py-24 lg:py-32 overflow-hidden noise-overlay">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-accent/[0.06] rounded-full blur-[150px] ambient-orb animate-pulse-glow" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[130px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[130px] ambient-orb animate-pulse-glow" style={{ animationDelay: "2s" }} />
         </div>
         <div className="absolute inset-0 dot-grid-dark opacity-30" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -238,7 +246,7 @@ export default function AboutPage() {
             <div className="mt-10">
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
               >
                 Start Your Project
                 <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />

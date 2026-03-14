@@ -32,7 +32,7 @@ export default function LocationPageClient({
           style={{ animationDelay: "0s" }}
         />
         <div
-          className="absolute animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full pointer-events-none"
+          className="absolute animate-float-medium top-[20%] right-[15%] w-12 h-12 bg-gradient-to-br from-accent/10 to-accent/10 rounded-full pointer-events-none"
           style={{ animationDelay: "1s" }}
         />
         <div
@@ -120,7 +120,7 @@ export default function LocationPageClient({
           >
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+              className="group inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
             >
               Get a Free Quote
               <ArrowRight
@@ -281,7 +281,7 @@ export default function LocationPageClient({
               <div className="mt-10">
                 <Link
                   href="/contact"
-                  className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(147,51,234,0.5),0_0_48px_rgba(147,51,234,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
                 >
                   Start Your Project
                   <ArrowRight
