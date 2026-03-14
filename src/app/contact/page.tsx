@@ -130,7 +130,7 @@ export default function ContactPage() {
           </motion.p>
           <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-display font-black text-white leading-tight">
             {HERO_WORDS.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
+              <span key={i} className="inline-block overflow-hidden mr-[0.3em] pb-[0.15em] -mb-[0.15em]">
                 <motion.span
                   initial={reduced ? undefined : { y: "100%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}

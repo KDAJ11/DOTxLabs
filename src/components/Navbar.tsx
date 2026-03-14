@@ -66,9 +66,9 @@ export default function Navbar() {
             <Image
               src="/DOTxLabs.png"
               alt="DOTxLabs"
-              width={160}
-              height={52}
-              className="h-[52px] w-auto"
+              width={192}
+              height={64}
+              className="h-[64px] w-auto"
               priority
             />
           </Link>

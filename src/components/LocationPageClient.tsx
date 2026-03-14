@@ -86,7 +86,7 @@ export default function LocationPageClient({
             {words.map((word, i) => (
               <span
                 key={i}
-                className="inline-block overflow-hidden mr-[0.3em]"
+                className="inline-block overflow-hidden mr-[0.3em] pb-[0.15em] -mb-[0.15em]"
               >
                 <motion.span
                   initial={{ y: "100%", opacity: 0 }}

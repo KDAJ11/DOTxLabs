@@ -16,25 +16,17 @@ export default function Footer() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        {/* Centered logo at top of footer */}
-        <div className="flex justify-center mb-12">
-          <Image
-            src="/DOTxLabs.png"
-            alt="DOTxLabs"
-            width={140}
-            height={44}
-            className="h-[44px] w-auto"
-          />
-        </div>
-
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div>
-            <Link
-              href="/"
-              className="text-2xl font-display font-bold tracking-tight text-white"
-            >
-              DOT<span className="text-accent">x</span>Labs
+            <Link href="/" className="inline-block">
+              <Image
+                src="/DOTxLabs.png"
+                alt="DOTxLabs"
+                width={180}
+                height={60}
+                className="h-[60px] w-auto brightness-110"
+              />
             </Link>
             <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-xs">
               Web design, SEO & AI automation for businesses across the GTA.

@@ -335,7 +335,7 @@ function Hero() {
         >
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
             {HERO_WORDS.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
+              <span key={i} className="inline-block overflow-hidden mr-[0.3em] pb-[0.15em] -mb-[0.15em]">
                 <motion.span
                   initial={{ y: "100%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
