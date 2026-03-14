@@ -158,15 +158,26 @@ const HERO_WORDS = "We Build Websites That Actually Rank.".split(" ");
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 500], [0, -80]);
+
+  // Scroll-fade via DOM instead of MotionValue — keeps SSR HTML visible at opacity:1
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      if (contentRef.current) {
+        const o = Math.max(0, Math.min(1, 1 - v / 0.8));
+        contentRef.current.style.opacity = String(o);
+      }
+    });
+    return unsubscribe;
+  }, [scrollYProgress]);
 
   // Mouse parallax for hero shapes (desktop only)
   const mouse = useMouseParallax(25);
@@ -315,8 +326,8 @@ function Hero() {
       <XBrand variant="glass" />
       <XBrand variant="scatter" />
 
-      <motion.div
-        style={{ opacity }}
+      <div
+        ref={contentRef}
         className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center"
       >
         <motion.div
@@ -405,7 +416,7 @@ function Hero() {
             </span>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-content to-transparent z-10" />
