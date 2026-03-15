@@ -49,7 +49,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
 
             <div className="flex items-center gap-3 mb-5">
               <span
-                className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
+                className={`inline-block rounded-sm px-3 py-1 text-xs font-medium ${
                   CATEGORY_COLORS[post.category] ?? "bg-gray-500/20 text-gray-300"
                 }`}
               >
@@ -118,7 +118,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 mt-6 rounded-full bg-accent px-8 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-colors"
+                className="inline-flex items-center gap-2 mt-6 rounded-sm bg-accent px-8 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-colors"
               >
                 Get in touch
               </Link>

@@ -168,7 +168,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="ml-4 inline-flex items-center justify-center rounded-full bg-accent px-6 py-2 text-[13px] font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[40px] hover:shadow-[0_0_20px_rgba(123,53,255,0.4)]"
+              className="ml-4 inline-flex items-center justify-center rounded-sm bg-accent px-6 py-2 text-[13px] font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[40px] hover:shadow-[0_0_20px_rgba(123,53,255,0.4)]"
             >
               Start Your Project
             </Link>
@@ -255,7 +255,7 @@ export default function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block w-full text-center rounded-full bg-accent px-5 py-3 text-base font-medium text-white hover:bg-accent-hover transition-colors min-h-[44px]"
+                className="block w-full text-center rounded-sm bg-accent px-5 py-3 text-base font-medium text-white hover:bg-accent-hover transition-colors min-h-[44px]"
               >
                 Start Your Project
               </Link>

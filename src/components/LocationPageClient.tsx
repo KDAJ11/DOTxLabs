@@ -74,7 +74,7 @@ export default function LocationPageClient({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15 }}
-            className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 border border-accent/20 px-4 py-1.5 mb-6"
+            className="inline-flex items-center gap-1.5 rounded-sm bg-accent/15 border border-accent/20 px-4 py-1.5 mb-6"
           >
             <MapPin size={14} className="text-accent" />
             <span className="text-xs font-medium text-accent">
@@ -120,7 +120,7 @@ export default function LocationPageClient({
           >
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+              className="group inline-flex items-center gap-2 rounded-sm bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
             >
               Get a Free Quote
               <ArrowRight
@@ -252,7 +252,7 @@ export default function LocationPageClient({
                 {data.nearbyAreas.map((area) => (
                   <span
                     key={area}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-white border border-black/5 px-4 py-2 text-sm text-hero/60"
+                    className="inline-flex items-center gap-1.5 rounded-sm bg-white border border-black/5 px-4 py-2 text-sm text-hero/60"
                     style={{
                       boxShadow:
                         "0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)",
@@ -281,7 +281,7 @@ export default function LocationPageClient({
               <div className="mt-10">
                 <Link
                   href="/contact"
-                  className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-300 min-h-[44px] hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-sm bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
                 >
                   Start Your Project
                   <ArrowRight

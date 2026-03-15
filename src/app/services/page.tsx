@@ -79,7 +79,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
           {hasSubpage && (
             <Link
               href={`/services/${service.id}`}
-              className="group inline-flex items-center gap-2 rounded-full border border-accent/30 px-6 py-3 text-sm font-medium text-accent hover:bg-accent/10 transition-all duration-300 min-h-[44px]"
+              className="group inline-flex items-center gap-2 rounded-sm border border-accent/30 px-6 py-3 text-sm font-medium text-accent hover:bg-accent/10 transition-all duration-200 min-h-[44px]"
             >
               Learn More
               <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -87,7 +87,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
           )}
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+            className="group inline-flex items-center gap-2 rounded-sm bg-accent px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-all duration-200 min-h-[44px] active:translate-y-[1px]"
           >
             Start Your Project
             <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -324,7 +324,7 @@ export default function ServicesPage() {
             <div className="mt-10">
               <Link
                 href="/contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-300 min-h-[44px] hover:shadow-[0_0_24px_rgba(123,53,255,0.5),0_0_48px_rgba(123,53,255,0.2)] active:translate-y-[2px] active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2 rounded-sm bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-200 min-h-[44px] active:translate-y-[1px]"
               >
                 Start Your Project
                 <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
