@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, Clock } from "lucide-react";
-import FadeIn from "@/components/FadeIn";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import PageFrame from "@/components/ui/PageFrame";
+import ParallaxSection from "@/components/ui/ParallaxSection";
+import { StaggeredCards, StaggeredCard } from "@/components/ui/StaggeredCards";
 import { BLOG_POSTS } from "@/lib/blog-data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
@@ -82,63 +86,65 @@ export default function BlogPage() {
         <div className="absolute inset-0 dot-grid-light" />
         <div className="absolute inset-0 faint-grid" />
 
-        <div className="relative z-[1] mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            {BLOG_POSTS.map((post, i) => (
-              <FadeIn key={post.slug} delay={i * 0.1}>
-                <article>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="group block rounded-2xl p-8 transition-all duration-500 hover:shadow-lg hover:shadow-accent/5"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.65)",
-                      backdropFilter: "blur(20px) saturate(1.3)",
-                      WebkitBackdropFilter: "blur(20px) saturate(1.3)",
-                      border: "1px solid rgba(255,255,255,0.8)",
-                      boxShadow:
-                        "0 4px 24px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <span
-                        className={`inline-block rounded-xl px-3 py-1 text-xs font-medium ${
-                          CATEGORY_COLORS[post.category] ?? "bg-gray-500/20 text-gray-300"
-                        }`}
-                      >
-                        {post.category}
-                      </span>
-                      <span className="flex items-center gap-1 text-xs text-hero/40">
-                        <Clock size={12} />
-                        {post.readingTime}
-                      </span>
-                    </div>
+        <PageFrame variant="light">
+          <ParallaxSection speed={0.15}>
+            <StaggeredCards>
+              {BLOG_POSTS.map((post) => (
+                <StaggeredCard key={post.slug}>
+                  <article>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="group block rounded-2xl p-8 transition-all duration-500 hover:shadow-lg hover:shadow-accent/5"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.65)",
+                        backdropFilter: "blur(20px) saturate(1.3)",
+                        WebkitBackdropFilter: "blur(20px) saturate(1.3)",
+                        border: "1px solid rgba(255,255,255,0.8)",
+                        boxShadow:
+                          "0 4px 24px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.6)",
+                      }}
+                    >
+                      <div className="flex items-center gap-3 mb-4">
+                        <span
+                          className={`inline-block rounded-xl px-3 py-1 text-xs font-medium ${
+                            CATEGORY_COLORS[post.category] ?? "bg-gray-500/20 text-gray-300"
+                          }`}
+                        >
+                          {post.category}
+                        </span>
+                        <span className="flex items-center gap-1 text-xs text-hero/40">
+                          <Clock size={12} />
+                          {post.readingTime}
+                        </span>
+                      </div>
 
-                    <h2 className="text-xl sm:text-2xl font-bold text-hero group-hover:text-accent transition-colors">
-                      {post.title}
-                    </h2>
+                      <h2 className="text-xl sm:text-2xl font-bold text-hero group-hover:text-accent transition-colors">
+                        {post.title}
+                      </h2>
 
-                    <p className="mt-3 text-sm sm:text-base text-hero/50 leading-relaxed">
-                      {post.excerpt}
-                    </p>
+                      <p className="mt-3 text-sm sm:text-base text-hero/50 leading-relaxed">
+                        {post.excerpt}
+                      </p>
 
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-xs text-hero/30">
-                        {formatDate(post.date)}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-sm font-semibold text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Read article{" "}
-                        <ArrowRight
-                          size={14}
-                          className="transition-transform duration-200 group-hover:translate-x-1"
-                        />
-                      </span>
-                    </div>
-                  </Link>
-                </article>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="text-xs text-hero/30">
+                          {formatDate(post.date)}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-sm font-semibold text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          Read article{" "}
+                          <ArrowRight
+                            size={14}
+                            className="transition-transform duration-200 group-hover:translate-x-1"
+                          />
+                        </span>
+                      </div>
+                    </Link>
+                  </article>
+                </StaggeredCard>
+              ))}
+            </StaggeredCards>
+          </ParallaxSection>
+        </PageFrame>
       </section>
     </>
   );

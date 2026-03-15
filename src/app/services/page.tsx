@@ -4,7 +4,12 @@ import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import FadeIn from "@/components/FadeIn";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import PageFrame from "@/components/ui/PageFrame";
+import { StaggeredCards, StaggeredCard } from "@/components/ui/StaggeredCards";
+import ParallaxSection from "@/components/ui/ParallaxSection";
+import BackgroundTransition from "@/components/ui/BackgroundTransition";
 import { SERVICES } from "@/lib/data";
 import type { ServiceCategory } from "@/lib/data";
 import { getAllServiceSlugs } from "@/lib/service-pages-data";
@@ -22,13 +27,9 @@ const HERO_WORDS = "Everything Your Brand Needs".split(" ");
 
 /* ─── Section orb configs per service index ─────────── */
 const DARK_ORB_CONFIGS = [
-  // Index 1 (SEO) — top-right, purple, 18s
   { top: "10%", right: "8%", width: 350, height: 350, color: "rgba(123,53,255,0.15)", duration: "18s" },
-  // Index 3 (Brand Strategy) — centered-right, violet, 20s
   { top: "40%", right: "5%", width: 300, height: 300, color: "rgba(139,92,246,0.12)", duration: "20s" },
-  // Index 5 (Digital Marketing) — bottom-left, indigo, 22s
   { bottom: "10%", left: "5%", width: 400, height: 400, color: "rgba(99,102,241,0.12)", duration: "22s" },
-  // Index 7 (Marketing Campaigns) — two orbs, 16s/24s
   { top: "15%", left: "8%", width: 250, height: 250, color: "rgba(123,53,255,0.1)", duration: "16s" },
 ];
 
@@ -51,6 +52,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
         initial={reduced ? undefined : { x: -32, opacity: 0 }}
         animate={shouldAnimate ? { x: 0, opacity: 1 } : undefined}
         transition={{ duration: 0.6, ease: EASE_EXPO }}
+        style={{ willChange: "transform, opacity" }}
       >
         <p
           className={`text-xs font-semibold uppercase ${
@@ -60,13 +62,13 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
         >
           {service.category}
         </p>
-        <h2
+        <AnimatedHeading
+          text={service.headline}
+          as="h2"
           className={`mt-3 text-3xl sm:text-4xl font-display font-black leading-tight ${
             isEven ? "text-hero" : "text-white"
           }`}
-        >
-          {service.headline}
-        </h2>
+        />
         <p
           className={`mt-4 text-base ${
             isEven ? "text-hero/60" : "text-white/50"
@@ -100,6 +102,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
         initial={reduced ? undefined : { x: 32, opacity: 0 }}
         animate={shouldAnimate ? { x: 0, opacity: 1 } : undefined}
         transition={{ duration: 0.6, delay: 0.12, ease: EASE_EXPO }}
+        style={{ willChange: "transform, opacity" }}
       >
         <div
           className={`rounded-2xl p-8 ${
@@ -131,6 +134,7 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
                 initial={reduced ? undefined : { y: 10, opacity: 0 }}
                 animate={shouldAnimate ? { y: 0, opacity: 1 } : undefined}
                 transition={{ duration: 0.4, delay: 0.3 + di * 0.07, ease: EASE_EXPO }}
+                style={{ willChange: "transform, opacity" }}
               >
                 <CheckCircle2
                   size={18}
@@ -192,6 +196,7 @@ export default function ServicesPage() {
                     ease: EASE_EXPO,
                   }}
                   className="inline-block"
+                  style={{ willChange: "transform, opacity" }}
                 >
                   {word}
                 </motion.span>
@@ -223,60 +228,72 @@ export default function ServicesPage() {
           darkOrbIndex++;
         }
 
+        const fromColor = isEven ? "#14121e" : "#fafafa";
+        const toColor = isEven ? "#fafafa" : "#14121e";
+
         return (
-          <section
+          <BackgroundTransition
             key={service.id}
-            id={service.id}
-            className={`relative ${isEven ? "bg-content" : "bg-hero"} py-20 lg:py-28 scroll-mt-20 overflow-hidden`}
+            from={fromColor}
+            to={toColor}
+            className={`relative py-20 lg:py-28 scroll-mt-20 overflow-hidden`}
           >
-            {/* Dark section ambient orbs */}
-            {!isEven && orbConfig && (
+            <section id={service.id}>
+              {/* Dark section ambient orbs */}
+              {!isEven && orbConfig && (
+                <div
+                  className="section-orb"
+                  style={{
+                    ...orbConfig,
+                    width: orbConfig.width,
+                    height: orbConfig.height,
+                    background: `radial-gradient(circle, ${orbConfig.color} 0%, transparent 70%)`,
+                    ["--orb-duration" as string]: orbConfig.duration,
+                  }}
+                />
+              )}
+
+              {/* Light section subtle gradient wash */}
+              {isLight && (
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: i === 0
+                      ? "linear-gradient(135deg, #fafafa 0%, #f5f0ff 100%)"
+                      : i === 2
+                      ? "linear-gradient(225deg, #fafafa 0%, #f5f0ff 100%)"
+                      : i === 4
+                      ? "linear-gradient(315deg, #fafafa 0%, #f5f0ff 100%)"
+                      : "linear-gradient(45deg, #fafafa 0%, #f5f0ff 100%)",
+                  }}
+                />
+              )}
+
+              {/* X Assets — corners only, 2 per section max */}
               <div
-                className="section-orb"
-                style={{
-                  ...orbConfig,
-                  width: orbConfig.width,
-                  height: orbConfig.height,
-                  background: `radial-gradient(circle, ${orbConfig.color} 0%, transparent 70%)`,
-                  ["--orb-duration" as string]: orbConfig.duration,
-                }}
-              />
-            )}
+                className="absolute top-5 right-6 pointer-events-none z-0 hidden md:block"
+                style={{ opacity: isEven ? 0.10 : 0.20 }}
+              >
+                <XBrand variant="stroke" size={isEven ? 40 : 48} />
+              </div>
+              <div className="absolute bottom-5 left-6 pointer-events-none z-0 hidden md:block">
+                <SmallStaticX size={20} opacity={isEven ? 0.06 : 0.12} />
+              </div>
 
-            {/* Light section subtle gradient wash */}
-            {isLight && (
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: i === 0
-                    ? "linear-gradient(135deg, #fafafa 0%, #f5f0ff 100%)"
-                    : i === 2
-                    ? "linear-gradient(225deg, #fafafa 0%, #f5f0ff 100%)"
-                    : i === 4
-                    ? "linear-gradient(315deg, #fafafa 0%, #f5f0ff 100%)"
-                    : "linear-gradient(45deg, #fafafa 0%, #f5f0ff 100%)",
-                }}
-              />
-            )}
+              {/* Faint grid on light sections */}
+              {isEven && <div className="absolute inset-0 faint-grid" />}
 
-            {/* X Assets — corners only, 2 per section max */}
-            <div
-              className="absolute top-5 right-6 pointer-events-none z-0 hidden md:block"
-              style={{ opacity: isEven ? 0.10 : 0.20 }}
-            >
-              <XBrand variant="stroke" size={isEven ? 40 : 48} />
-            </div>
-            <div className="absolute bottom-5 left-6 pointer-events-none z-0 hidden md:block">
-              <SmallStaticX size={20} opacity={isEven ? 0.06 : 0.12} />
-            </div>
-
-            {/* Faint grid on light sections */}
-            {isEven && <div className="absolute inset-0 faint-grid" />}
-
-            <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <ServiceContent service={service} isEven={isEven} index={i} />
-            </div>
-          </section>
+              <ParallaxSection speed={0.15}>
+                <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                  <PageFrame variant={isEven ? "light" : "dark"}>
+                    <div className="p-6 lg:p-10">
+                      <ServiceContent service={service} isEven={isEven} index={i} />
+                    </div>
+                  </PageFrame>
+                </div>
+              </ParallaxSection>
+            </section>
+          </BackgroundTransition>
         );
       })}
 
@@ -313,24 +330,32 @@ export default function ServicesPage() {
         </div>
 
         <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <FadeIn>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white leading-tight">
-              Not Sure Where to Start?
-            </h2>
-            <p className="mt-4 text-lg text-white/50 max-w-xl mx-auto" style={{ lineHeight: 1.6 }}>
-              Book a free consultation and we&apos;ll map out exactly what your
-              brand needs to grow.
-            </p>
-            <div className="mt-10">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-200 min-h-[44px] active:translate-y-[1px]"
-              >
-                Start Your Project
-                <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+          <PageFrame variant="dark">
+            <div className="p-12 lg:p-16">
+              <AnimatedHeading
+                text="Not Sure Where to Start?"
+                as="h2"
+                className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white leading-tight"
+              />
+              <AnimateOnScroll delay={0.2}>
+                <p className="mt-4 text-lg text-white/50 max-w-xl mx-auto" style={{ lineHeight: 1.6 }}>
+                  Book a free consultation and we&apos;ll map out exactly what your
+                  brand needs to grow.
+                </p>
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={0.3}>
+                <div className="mt-10">
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-10 py-4 text-base font-medium text-white hover:bg-accent-hover transition-all duration-200 min-h-[44px] active:translate-y-[1px]"
+                  >
+                    Start Your Project
+                    <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </AnimateOnScroll>
             </div>
-          </FadeIn>
+          </PageFrame>
         </div>
       </section>
     </>

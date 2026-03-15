@@ -3,7 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Mail, Phone, MapPin, Send, Check } from "lucide-react";
-import FadeIn from "@/components/FadeIn";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import PageFrame from "@/components/ui/PageFrame";
+import ParallaxSection from "@/components/ui/ParallaxSection";
 import { SERVICES } from "@/lib/data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
 
@@ -182,86 +185,85 @@ export default function ContactPage() {
           <XBrand variant="stroke" size={32} />
         </div>
 
-        <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
-            {/* Contact info */}
-            <FadeIn className="lg:col-span-2">
-              <h2 className="text-2xl font-display font-black text-hero">
-                Contact Info
-              </h2>
-              <div className="mt-8 space-y-6">
-                <a
-                  href="mailto:david@dotxlabs.com"
-                  className="flex items-center gap-4 group"
-                >
-                  <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
-                    <Mail
-                      size={18}
-                      className="text-accent"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
-                      Email
-                    </p>
-                    <p className="text-sm font-medium text-hero group-hover:text-accent transition-colors">
-                      david@dotxlabs.com
-                    </p>
-                  </div>
-                </a>
+        <PageFrame variant="light">
+          <ParallaxSection speed={0.15}>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+              {/* Contact info */}
+              <AnimateOnScroll className="lg:col-span-2">
+                <AnimatedHeading text="Contact Info" as="h2" className="text-2xl font-display font-black text-hero" />
+                <div className="mt-8 space-y-6">
+                  <a
+                    href="mailto:david@dotxlabs.com"
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
+                      <Mail
+                        size={18}
+                        className="text-accent"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
+                        Email
+                      </p>
+                      <p className="text-sm font-medium text-hero group-hover:text-accent transition-colors">
+                        david@dotxlabs.com
+                      </p>
+                    </div>
+                  </a>
 
-                <a href="tel:+16474603641" className="flex items-center gap-4 group">
-                  <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
-                    <Phone
-                      size={18}
-                      className="text-accent"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
-                      Phone
-                    </p>
-                    <p className="text-sm font-medium text-hero group-hover:text-accent transition-colors">
-                      647-460-3641
-                    </p>
-                  </div>
-                </a>
+                  <a href="tel:+16474603641" className="flex items-center gap-4 group">
+                    <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
+                      <Phone
+                        size={18}
+                        className="text-accent"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
+                        Phone
+                      </p>
+                      <p className="text-sm font-medium text-hero group-hover:text-accent transition-colors">
+                        647-460-3641
+                      </p>
+                    </div>
+                  </a>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
-                    <MapPin
-                      size={18}
-                      className="text-accent"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
-                      Location
-                    </p>
-                    <p className="text-sm font-medium text-hero">
-                      Toronto / GTA, Canada
-                    </p>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center w-11 h-11 rounded-full bg-accent/10">
+                      <MapPin
+                        size={18}
+                        className="text-accent"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs text-hero/40 uppercase font-semibold" style={{ letterSpacing: "0.15em" }}>
+                        Location
+                      </p>
+                      <p className="text-sm font-medium text-hero">
+                        Toronto / GTA, Canada
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Available badge */}
-              <div className="mt-10 inline-flex items-center gap-3 rounded-xl bg-white/50 border border-black/[0.06] px-4 py-2">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="sonar-dot absolute inline-flex h-full w-full rounded-full bg-green-500" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
-                </span>
-                <span className="text-sm text-hero/60 font-medium">
-                  Available for new projects
-                </span>
-              </div>
-            </FadeIn>
+                {/* Available badge */}
+                <div className="mt-10 inline-flex items-center gap-3 rounded-xl bg-white/50 border border-black/[0.06] px-4 py-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="sonar-dot absolute inline-flex h-full w-full rounded-full bg-green-500" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                  </span>
+                  <span className="text-sm text-hero/60 font-medium">
+                    Available for new projects
+                  </span>
+                </div>
+              </AnimateOnScroll>
 
-            {/* Form */}
-            <div className="lg:col-span-3">
+              {/* Form */}
+              <div className="lg:col-span-3">
               <form onSubmit={handleSubmit} className="space-y-6" aria-live="polite">
                 {/* Row 1: Name + Email */}
                 <motion.div
@@ -269,6 +271,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.6, ease: EASE_EXPO }}
                   className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <div className="relative">
                     <label
@@ -314,6 +317,7 @@ export default function ContactPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.68, ease: EASE_EXPO }}
                   className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <div>
                     <label
@@ -362,6 +366,7 @@ export default function ContactPage() {
                   initial={reduced ? undefined : { opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.76, ease: EASE_EXPO }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <label
                     htmlFor="message"
@@ -386,6 +391,7 @@ export default function ContactPage() {
                   initial={reduced ? undefined : { opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.84, ease: EASE_EXPO }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <button
                     type="submit"
@@ -424,7 +430,8 @@ export default function ContactPage() {
               </form>
             </div>
           </div>
-        </div>
+        </ParallaxSection>
+        </PageFrame>
       </section>
     </>
   );
