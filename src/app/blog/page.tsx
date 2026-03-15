@@ -101,7 +101,7 @@ export default function BlogPage() {
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <span
-                        className={`inline-block rounded-sm px-3 py-1 text-xs font-medium ${
+                        className={`inline-block rounded-xl px-3 py-1 text-xs font-medium ${
                           CATEGORY_COLORS[post.category] ?? "bg-gray-500/20 text-gray-300"
                         }`}
                       >

@@ -249,7 +249,7 @@ export default function ContactPage() {
               </div>
 
               {/* Available badge */}
-              <div className="mt-10 inline-flex items-center gap-3 rounded-sm bg-white/50 border border-black/[0.06] px-4 py-2">
+              <div className="mt-10 inline-flex items-center gap-3 rounded-xl bg-white/50 border border-black/[0.06] px-4 py-2">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="sonar-dot absolute inline-flex h-full w-full rounded-full bg-green-500" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
@@ -390,10 +390,10 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={submitState === "loading"}
-                    className={`group inline-flex items-center justify-center gap-2 rounded-sm px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] active:translate-y-[1px] ${
+                    className={`group inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] active:translate-y-[1px] ${
                       submitState === "success"
                         ? "bg-green-500 hover:bg-green-600"
-                        : "bg-accent hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(123,53,255,0.4)]"
+                        : "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
                     }`}
                   >
                     {submitState === "loading" ? (

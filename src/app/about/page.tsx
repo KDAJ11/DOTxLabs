@@ -246,7 +246,7 @@ export default function AboutPage() {
             <div className="mt-10">
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-sm bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-[#1a1a1a] px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
               >
                 Start Your Project
                 <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
