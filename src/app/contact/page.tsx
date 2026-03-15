@@ -393,7 +393,7 @@ export default function ContactPage() {
                     className={`group inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] active:translate-y-[1px] ${
                       submitState === "success"
                         ? "bg-green-500 hover:bg-green-600"
-                        : "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+                        : "bg-accent hover:bg-accent-hover"
                     }`}
                   >
                     {submitState === "loading" ? (

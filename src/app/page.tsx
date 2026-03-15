@@ -47,16 +47,6 @@ function Hero() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center">
-        {/* Eyebrow */}
-        <FadeUp>
-          <p
-            className="text-xs font-semibold text-accent mb-6"
-            style={{ letterSpacing: "0.2em", textTransform: "uppercase" }}
-          >
-            TORONTO
-          </p>
-        </FadeUp>
-
         {/* Headline — appears immediately, fast fade-up only */}
         <FadeUp delay={0.05}>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
@@ -78,14 +68,14 @@ function Hero() {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#1a1a1a] px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
             >
               Start Your Project
               <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link
               href="/about"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#1a1a1a] px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
             >
               See How We Work
               <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -339,7 +329,7 @@ function CTASection() {
           <div className="mt-10">
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#1a1a1a] px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
             >
               Start Your Project
               <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />

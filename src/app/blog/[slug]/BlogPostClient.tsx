@@ -118,7 +118,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 mt-6 rounded-xl bg-[#1a1a1a] px-8 py-3 text-sm font-medium text-white hover:bg-[#2a2a2a] transition-colors"
+                className="inline-flex items-center gap-2 mt-6 rounded-xl bg-accent px-8 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-colors"
               >
                 Get in touch
               </Link>

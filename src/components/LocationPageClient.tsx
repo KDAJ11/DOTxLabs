@@ -74,7 +74,7 @@ export default function LocationPageClient({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15 }}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#1a1a1a]/15 border border-accent/20 px-4 py-1.5 mb-6"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-accent/15 border border-accent/20 px-4 py-1.5 mb-6"
           >
             <MapPin size={14} className="text-accent" />
             <span className="text-xs font-medium text-accent">
@@ -120,7 +120,7 @@ export default function LocationPageClient({
           >
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-xl bg-[#1a1a1a] px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
+              className="group inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
             >
               Get a Free Quote
               <ArrowRight
@@ -281,7 +281,7 @@ export default function LocationPageClient({
               <div className="mt-10">
                 <Link
                   href="/contact"
-                  className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-[#1a1a1a] px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-[#2a2a2a] active:translate-y-[1px]"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-10 py-4 text-base font-medium text-white transition-all duration-200 min-h-[44px] hover:bg-accent-hover active:translate-y-[1px]"
                 >
                   Start Your Project
                   <ArrowRight
