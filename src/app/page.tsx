@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useReducedMotion, useMotionValue, useSpring } from "motion/react";
+import { useRef, useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
@@ -281,12 +281,89 @@ function FlipCardX() {
   );
 }
 
+/* ─── Flip Hint Icon (↻ rotation affordance) ─────────── */
+function FlipHintIcon({ isHovered, reduced }: { isHovered: boolean; reduced: boolean }) {
+  const [hoverSpinCount, setHoverSpinCount] = useState(0);
+
+  useEffect(() => {
+    if (isHovered && !reduced) {
+      setHoverSpinCount((prev) => prev + 1);
+    }
+  }, [isHovered, reduced]);
+
+  const icon = (
+    <svg width={20} height={20} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      {/* Upper arc with arrow */}
+      <path d="M 14 6 A 5 5 0 0 0 6 6" stroke="#7B35FF" strokeWidth={1.5} strokeLinecap="round" />
+      <polyline points="6,3.5 6,6 8.5,6" stroke="#7B35FF" strokeWidth={1.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Lower arc with arrow */}
+      <path d="M 6 14 A 5 5 0 0 0 14 14" stroke="#7B35FF" strokeWidth={1.5} strokeLinecap="round" />
+      <polyline points="14,16.5 14,14 11.5,14" stroke="#7B35FF" strokeWidth={1.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+
+  if (reduced) {
+    return (
+      <div className="absolute top-3 right-3 z-[2]" style={{ width: 20, height: 20, opacity: 0.6 }}>
+        {icon}
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="absolute top-3 right-3 z-[2]"
+      style={{ width: 20, height: 20 }}
+      initial={{ rotateY: 0, opacity: 0.6 }}
+      animate={{
+        rotateY: 180,
+        opacity: isHovered ? 1 : 0.6,
+        rotateZ: hoverSpinCount * 360,
+      }}
+      transition={{
+        rotateY: { delay: 1.2, duration: 0.4, ease: "easeInOut" },
+        rotateZ: { duration: 0.4, ease: "easeInOut" },
+        opacity: { duration: 0.2 },
+      }}
+    >
+      {icon}
+    </motion.div>
+  );
+}
+
 /* ─── Flip Card Component ────────────────────────────── */
 function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
   const [flipped, setFlipped] = useState(false);
+  const [isCardHovered, setIsCardHovered] = useState(false);
   const reduced = useReducedMotion();
+  const tiltRef = useRef<HTMLDivElement>(null);
 
-  // Reduced motion: use opacity fade instead of 3D flip
+  // 3D tilt springs — ±8deg max, soft spring for living feel
+  const tiltX = useMotionValue(0.5);
+  const tiltY = useMotionValue(0.5);
+  const springCfg = { stiffness: 150, damping: 20 };
+  const rotateXTilt = useSpring(useTransform(tiltY, [0, 1], [8, -8]), springCfg);
+  const rotateYTilt = useSpring(useTransform(tiltX, [0, 1], [-8, 8]), springCfg);
+
+  function handleTiltMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = tiltRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    tiltX.set((e.clientX - rect.left) / rect.width);
+    tiltY.set((e.clientY - rect.top) / rect.height);
+  }
+
+  function handleTiltLeave() {
+    tiltX.set(0.5);
+    tiltY.set(0.5);
+    setIsCardHovered(false);
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlipped(!flipped); }
+  };
+
+  // Reduced motion: opacity fade, no tilt, static icon
   if (reduced) {
     return (
       <div
@@ -295,13 +372,9 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
         aria-label={`${item.group} card. Tap to ${flipped ? "see overview" : "see details"}`}
         tabIndex={0}
         onClick={() => setFlipped(!flipped)}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlipped(!flipped); } }}
-        className="relative h-full cursor-pointer"
-        style={{
-          touchAction: "manipulation",
-          borderRadius: 12,
-          minHeight: 260,
-        }}
+        onKeyDown={handleKeyDown}
+        className="relative h-full"
+        style={{ touchAction: "manipulation", borderRadius: 12, minHeight: 260 }}
       >
         {/* Front — fades out */}
         <div
@@ -314,6 +387,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
             pointerEvents: flipped ? "none" : "auto",
           }}
         >
+          <FlipHintIcon isHovered={false} reduced />
           <p className="text-xs font-semibold text-accent uppercase" style={{ letterSpacing: "0.15em" }}>
             {item.group}
           </p>
@@ -351,16 +425,22 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
   }
 
   return (
-    <div
+    <motion.div
+      ref={tiltRef}
       role="button"
       aria-pressed={flipped}
       aria-label={`${item.group} card. Tap to ${flipped ? "see overview" : "see details"}`}
       tabIndex={0}
       onClick={() => setFlipped(!flipped)}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlipped(!flipped); } }}
-      className="relative h-full cursor-pointer group"
+      onKeyDown={handleKeyDown}
+      onMouseMove={handleTiltMove}
+      onMouseEnter={() => setIsCardHovered(true)}
+      onMouseLeave={handleTiltLeave}
+      className="relative h-full group"
       style={{
-        perspective: 1000,
+        transformPerspective: 800,
+        rotateX: rotateXTilt,
+        rotateY: rotateYTilt,
         touchAction: "manipulation",
         minHeight: 260,
       }}
@@ -369,6 +449,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
         className="relative w-full h-full"
         style={{
           transformStyle: "preserve-3d",
+          transformPerspective: 1000,
         }}
         animate={{ rotateY: flipped ? 180 : 0 }}
         whileHover={{ rotateY: 180 }}
@@ -385,6 +466,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
             borderRadius: 12,
           }}
         >
+          <FlipHintIcon isHovered={isCardHovered} reduced={false} />
           <p className="text-xs font-semibold text-accent uppercase" style={{ letterSpacing: "0.15em" }}>
             {item.group}
           </p>
@@ -420,7 +502,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
           </Link>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -583,7 +665,7 @@ function IndustriesTicker() {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 25,
+              duration: 14,
               ease: "linear",
             },
           }}

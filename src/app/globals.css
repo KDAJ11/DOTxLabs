@@ -397,9 +397,7 @@ hr, .divider {
   border-color: rgba(123,53,255,0.6);
   background: rgba(123,53,255,0.12);
 }
-.cursor-dot[data-hover="true"] {
-  opacity: 0 !important;
-}
+/* dot morph handled by AnimatePresence in CustomCursor.tsx */
 .cursor-ring[data-click="true"] {
   scale: 0.75;
 }
