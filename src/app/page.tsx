@@ -675,9 +675,9 @@ function WhatMakesUsDifferent() {
                   const IconComp = block.Icon;
 
                   return (
-                    <StaggeredCards key={item.heading} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                      {/* Text column — left on desktop, below on mobile */}
-                      <StaggeredCard>
+                    <ScrollReveal key={item.heading} delay={index * 0.12}>
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        {/* Text column — col-span directly on grid child */}
                         <div
                           className="lg:col-span-7 p-8 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 relative"
                           style={{
@@ -703,15 +703,13 @@ function WhatMakesUsDifferent() {
                             {item.content}
                           </p>
                         </div>
-                      </StaggeredCard>
 
-                      {/* Icon column — right on desktop, above on mobile (reordered with CSS) */}
-                      <StaggeredCard>
+                        {/* Icon column — col-span directly on grid child */}
                         <div className="lg:col-span-5 flex items-center justify-center order-first lg:order-last">
                           <IconComp />
                         </div>
-                      </StaggeredCard>
-                    </StaggeredCards>
+                      </div>
+                    </ScrollReveal>
                   );
                 })}
               </div>
