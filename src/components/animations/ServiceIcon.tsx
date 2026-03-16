@@ -119,7 +119,7 @@ function WebDevIcon({ animate, reduced }: { animate: boolean; reduced: boolean }
           x1={52} y1={39} x2={52} y2={47}
           stroke={ACCENT} strokeWidth={1.5} strokeLinecap="round"
           animate={{ opacity: [1, 0, 1] }}
-          transition={{ duration: 1, repeat: Infinity, ease: "steps(2)" }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
       )}
     </svg>
