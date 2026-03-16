@@ -463,6 +463,7 @@ export default function ServicesPage() {
                       <ProcessFlow
                         steps={SERVICE_PROCESS_STEPS[service.id]}
                         variant={isEven ? "light" : "dark"}
+                        service={service.id as "web-development" | "seo" | "ai-automation" | "brand-strategy" | "logo-design" | "digital-marketing" | "social-media-marketing" | "marketing-campaigns"}
                       />
                     )}
 
