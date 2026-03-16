@@ -12,6 +12,7 @@ import ParallaxSection from "@/components/ui/ParallaxSection";
 import BackgroundTransition from "@/components/ui/BackgroundTransition";
 import ProcessDiagram from "@/components/ui/ProcessDiagram";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
+import AboutValueIcon from "@/components/animations/AboutValueIcons";
 
 const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -174,6 +175,7 @@ export default function AboutPage() {
                       <StaggeredCard key={row.label} hoverEffect={false}>
                         <div className="group grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-10 lg:py-14 hover:bg-accent/[0.02] -mx-6 px-6 rounded-2xl transition-colors duration-500">
                           <div className="lg:col-span-4">
+                            <AboutValueIcon label={row.label} />
                             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-hero group-hover:text-accent transition-colors duration-300">
                               {row.label}
                             </h3>

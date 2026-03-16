@@ -14,6 +14,7 @@ import { SERVICES } from "@/lib/data";
 import type { ServiceCategory } from "@/lib/data";
 import { getAllServiceSlugs } from "@/lib/service-pages-data";
 import { XBrand, SmallStaticX } from "@/components/ui/XAsset";
+import ServiceIcon from "@/components/animations/ServiceIcon";
 
 const CATEGORY_ACCENT: Record<ServiceCategory, string> = {
   Design: "text-purple-400",
@@ -54,21 +55,28 @@ function ServiceContent({ service, isEven, index }: { service: typeof SERVICES[n
         transition={{ duration: 0.6, ease: EASE_EXPO }}
         style={{ willChange: "transform, opacity" }}
       >
-        <p
-          className={`text-xs font-semibold uppercase ${
-            isEven ? "text-accent" : CATEGORY_ACCENT[service.category]
-          }`}
-          style={{ letterSpacing: "0.15em" }}
-        >
-          {service.category}
-        </p>
-        <AnimatedHeading
-          text={service.headline}
-          as="h2"
-          className={`mt-3 text-3xl sm:text-4xl font-display font-black leading-tight ${
-            isEven ? "text-hero" : "text-white"
-          }`}
-        />
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <p
+              className={`text-xs font-semibold uppercase ${
+                isEven ? "text-accent" : CATEGORY_ACCENT[service.category]
+              }`}
+              style={{ letterSpacing: "0.15em" }}
+            >
+              {service.category}
+            </p>
+            <AnimatedHeading
+              text={service.headline}
+              as="h2"
+              className={`mt-3 text-3xl sm:text-4xl font-display font-black leading-tight ${
+                isEven ? "text-hero" : "text-white"
+              }`}
+            />
+          </div>
+          <div className="hidden sm:block flex-none">
+            <ServiceIcon service={service.id} isLight={isEven} />
+          </div>
+        </div>
         <p
           className={`mt-4 text-base ${
             isEven ? "text-hero/60" : "text-white/50"
