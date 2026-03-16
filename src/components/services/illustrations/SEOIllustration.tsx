@@ -38,7 +38,7 @@ export default function SEOIllustration() {
           times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
           duration: CYCLE,
           repeat: Infinity,
-          ease: "linear",
+          ease: "linear" as const,
         },
       };
 
@@ -51,7 +51,7 @@ export default function SEOIllustration() {
           times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
           duration: CYCLE,
           repeat: Infinity,
-          ease: "linear",
+          ease: "linear" as const,
         },
       };
 
@@ -63,7 +63,7 @@ export default function SEOIllustration() {
           times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
           duration: CYCLE,
           repeat: Infinity,
-          ease: "linear",
+          ease: "linear" as const,
         },
       };
 
@@ -76,7 +76,7 @@ export default function SEOIllustration() {
           times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
           duration: CYCLE,
           repeat: Infinity,
-          ease: "linear",
+          ease: "linear" as const,
         },
       };
 
@@ -89,7 +89,7 @@ export default function SEOIllustration() {
           times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
           duration: CYCLE,
           repeat: Infinity,
-          ease: "linear",
+          ease: "linear" as const,
         },
       };
 
@@ -327,7 +327,7 @@ export default function SEOIllustration() {
                 times: chromKeyframes.times,
                 duration: CYCLE,
                 repeat: Infinity,
-                ease: "linear",
+                ease: "linear" as const,
               }
             : undefined
         }
@@ -356,7 +356,7 @@ export default function SEOIllustration() {
                 times: urlBarKeyframes.times,
                 duration: CYCLE,
                 repeat: Infinity,
-                ease: "linear",
+                ease: "linear" as const,
               }
             : undefined
         }
@@ -408,7 +408,7 @@ export default function SEOIllustration() {
                       times: rowKeyframes.times,
                       duration: CYCLE,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: "linear" as const,
                     }
                   : undefined
               }
@@ -427,7 +427,7 @@ export default function SEOIllustration() {
                       times: rowKeyframes.times,
                       duration: CYCLE,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: "linear" as const,
                     }
                   : undefined
               }
@@ -451,7 +451,7 @@ export default function SEOIllustration() {
                       times: rowKeyframes.times,
                       duration: CYCLE,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: "linear" as const,
                     }
                   : undefined
               }
@@ -473,7 +473,7 @@ export default function SEOIllustration() {
                       times: rowKeyframes.times,
                       duration: CYCLE,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: "linear" as const,
                     }
                   : undefined
               }
@@ -511,7 +511,7 @@ export default function SEOIllustration() {
                   times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
                   duration: CYCLE,
                   repeat: Infinity,
-                  ease: "linear",
+                  ease: "linear" as const,
                 }
               : undefined
           }
@@ -535,7 +535,7 @@ export default function SEOIllustration() {
                   times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
                   duration: CYCLE,
                   repeat: Infinity,
-                  ease: "linear",
+                  ease: "linear" as const,
                 }
               : undefined
           }
@@ -558,7 +558,7 @@ export default function SEOIllustration() {
                   times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
                   duration: CYCLE,
                   repeat: Infinity,
-                  ease: "linear",
+                  ease: "linear" as const,
                 }
               : undefined
           }
@@ -583,7 +583,7 @@ export default function SEOIllustration() {
                   times: [0, 0.25, 0.45, RESET_START / CYCLE, 1],
                   duration: CYCLE,
                   repeat: Infinity,
-                  ease: "linear",
+                  ease: "linear" as const,
                 }
               : undefined
           }
