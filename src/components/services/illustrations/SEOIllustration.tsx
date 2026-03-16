@@ -401,7 +401,7 @@ export default function SEOIllustration() {
               r="8"
               stroke="rgba(255,255,255,0.2)"
               strokeWidth="1"
-              animate={isInView ? { opacity: rowKeyframes.values } : 0}
+              animate={isInView ? { opacity: rowKeyframes.values } : { opacity: 0 }}
               transition={
                 isInView
                   ? {
@@ -420,7 +420,7 @@ export default function SEOIllustration() {
               fill="rgba(255,255,255,0.2)"
               textAnchor="middle"
               fontWeight="bold"
-              animate={isInView ? { opacity: rowKeyframes.values } : 0}
+              animate={isInView ? { opacity: rowKeyframes.values } : { opacity: 0 }}
               transition={
                 isInView
                   ? {
@@ -444,7 +444,7 @@ export default function SEOIllustration() {
               stroke="rgba(255,255,255,0.7)"
               strokeWidth="1.5"
               strokeLinecap="round"
-              animate={isInView ? { opacity: rowKeyframes.values } : 0}
+              animate={isInView ? { opacity: rowKeyframes.values } : { opacity: 0 }}
               transition={
                 isInView
                   ? {
@@ -466,7 +466,7 @@ export default function SEOIllustration() {
               stroke="rgba(255,255,255,0.3)"
               strokeWidth="1"
               strokeLinecap="round"
-              animate={isInView ? { opacity: rowKeyframes.values } : 0}
+              animate={isInView ? { opacity: rowKeyframes.values } : { opacity: 0 }}
               transition={
                 isInView
                   ? {
