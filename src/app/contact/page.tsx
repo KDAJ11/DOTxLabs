@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Mail, Phone, MapPin, Send, Check } from "lucide-react";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import ContactEnvelope from "@/components/animations/ContactEnvelope";
 import PageFrame from "@/components/ui/PageFrame";
 import ParallaxSection from "@/components/ui/ParallaxSection";
 import { SERVICES } from "@/lib/data";
@@ -149,10 +150,20 @@ export default function ContactPage() {
               </span>
             ))}
           </h1>
+          {/* Envelope icon — centred below headline */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.5, ease: EASE_EXPO }}
+            className="mt-6 flex justify-center"
+          >
+            <ContactEnvelope />
+          </motion.div>
+
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: EASE_EXPO }}
+            transition={{ duration: 0.6, delay: 0.6, ease: EASE_EXPO }}
             className="mt-6 text-lg text-white/50 max-w-xl mx-auto"
             style={{ lineHeight: 1.6 }}
           >

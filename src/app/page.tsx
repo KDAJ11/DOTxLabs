@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion, useMotionValue, useSpring } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { BuildIcon, GrowIcon, AutomateIcon } from "@/components/animations/FlipCardIcons";
+import { CustomBuildIcon, SEORankIcon, AnimatedStatBadge } from "@/components/animations/WhyDotxIcons";
+import ScrollReveal from "@/components/animations/ScrollReveal";
+import HeroOrbital from "@/components/animations/HeroOrbital";
+import ProofStripIcon from "@/components/animations/ProofStripIcons";
 import { ArrowRight } from "lucide-react";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
@@ -146,6 +151,17 @@ function Hero() {
               })()}
             </h1>
 
+            {/* Hero Orbital — below headline on mobile, beside headline area on desktop */}
+            <motion.div
+              initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+              animate={reduced ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: EASE_SMOOTH }}
+              className="mt-6 flex justify-center lg:justify-start"
+              style={{ willChange: "transform, opacity" }}
+            >
+              <HeroOrbital />
+            </motion.div>
+
             {/* Subheading */}
             <motion.p
               initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
@@ -218,16 +234,19 @@ function ProofStrip() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <PageFrame variant="dark">
           <div className="p-8 lg:p-12">
-            <StaggeredCards className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-              {PROOF_STATEMENTS.map((item) => (
-                <StaggeredCard key={item.label} hoverEffect={false}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+              {PROOF_STATEMENTS.map((item, index) => (
+                <ScrollReveal key={item.label} delay={index * 0.1}>
                   <div>
-                    <h3 className="text-lg font-bold text-white">{item.label}</h3>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-lg font-bold text-white">{item.label}</h3>
+                      <ProofStripIcon label={item.label} />
+                    </div>
                     <p className="mt-2 text-sm text-white/45 leading-relaxed">{item.description}</p>
                   </div>
-                </StaggeredCard>
+                </ScrollReveal>
               ))}
-            </StaggeredCards>
+            </div>
           </div>
         </PageFrame>
       </div>
@@ -260,26 +279,6 @@ const SERVICE_GROUPS = [
     backAfter: "Same output. Fraction of the time.",
   },
 ];
-
-/* ─── Flip Card X mark ───────────────────────────────── */
-function FlipCardX() {
-  return (
-    <div
-      className="mx-auto mb-5 flex items-center justify-center"
-      style={{
-        width: 40,
-        height: 40,
-        borderRadius: 10,
-        boxShadow: "0 0 20px rgba(123, 53, 255, 0.4)",
-      }}
-    >
-      <svg width={24} height={24} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <line x1="5" y1="5" x2="19" y2="19" stroke="#7B35FF" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="19" y1="5" x2="5" y2="19" stroke="#7B35FF" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
-    </div>
-  );
-}
 
 /* ─── Flip Hint Icon (↻ rotation affordance) ─────────── */
 function FlipHintIcon({ isHovered, reduced }: { isHovered: boolean; reduced: boolean }) {
@@ -331,12 +330,65 @@ function FlipHintIcon({ isHovered, reduced }: { isHovered: boolean; reduced: boo
   );
 }
 
+/* ─── Flip Card Back Illustration Map ────────────────── */
+
+const FLIP_ICON_MAP: Record<string, React.ComponentType<{ isFlipped: boolean }>> = {
+  Build: BuildIcon,
+  Grow: GrowIcon,
+  Automate: AutomateIcon,
+};
+
 /* ─── Flip Card Component ────────────────────────────── */
 function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
   const [flipped, setFlipped] = useState(false);
   const [isCardHovered, setIsCardHovered] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const reduced = useReducedMotion();
   const tiltRef = useRef<HTMLDivElement>(null);
+  const autoFlipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const ctaTappedRef = useRef(false);
+
+  // Detect touch device
+  useEffect(() => {
+    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  // Auto-flip-back on mobile after 4 seconds
+  useEffect(() => {
+    if (!isTouchDevice || !flipped || reduced) return;
+
+    ctaTappedRef.current = false;
+    autoFlipTimerRef.current = setTimeout(() => {
+      if (!ctaTappedRef.current) {
+        setFlipped(false);
+      }
+    }, 4000);
+
+    return () => {
+      if (autoFlipTimerRef.current) {
+        clearTimeout(autoFlipTimerRef.current);
+        autoFlipTimerRef.current = null;
+      }
+    };
+  }, [flipped, isTouchDevice, reduced]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (autoFlipTimerRef.current) {
+        clearTimeout(autoFlipTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleCTAClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    ctaTappedRef.current = true;
+    if (autoFlipTimerRef.current) {
+      clearTimeout(autoFlipTimerRef.current);
+      autoFlipTimerRef.current = null;
+    }
+  }, []);
 
   // 3D tilt springs — ±8deg max, soft spring for living feel
   const tiltX = useMotionValue(0.5);
@@ -346,6 +398,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
   const rotateYTilt = useSpring(useTransform(tiltX, [0, 1], [-8, 8]), springCfg);
 
   function handleTiltMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (isTouchDevice) return;
     const el = tiltRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -359,9 +412,18 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
     setIsCardHovered(false);
   }
 
+  const handleClick = useCallback(() => {
+    if (isTouchDevice) {
+      setFlipped((prev) => !prev);
+    }
+    // Desktop: flip controlled by hover only, no click toggle
+  }, [isTouchDevice]);
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlipped(!flipped); }
   };
+
+  const BackIllustration = FLIP_ICON_MAP[item.group];
 
   // Reduced motion: opacity fade, no tilt, static icon
   if (reduced) {
@@ -409,7 +471,11 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
             pointerEvents: flipped ? "auto" : "none",
           }}
         >
-          <FlipCardX />
+          {BackIllustration && (
+            <div className="mb-3">
+              <BackIllustration isFlipped={flipped} />
+            </div>
+          )}
           <p className="text-sm text-white/50 leading-relaxed">{item.backBefore}</p>
           <p className="mt-3 text-base font-semibold text-white leading-snug">{item.backAfter}</p>
           <Link
@@ -431,16 +497,16 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
       aria-pressed={flipped}
       aria-label={`${item.group} card. Tap to ${flipped ? "see overview" : "see details"}`}
       tabIndex={0}
-      onClick={() => setFlipped(!flipped)}
+      onClick={handleClick}
       onKeyDown={handleKeyDown}
       onMouseMove={handleTiltMove}
-      onMouseEnter={() => setIsCardHovered(true)}
+      onMouseEnter={() => { if (!isTouchDevice) setIsCardHovered(true); }}
       onMouseLeave={handleTiltLeave}
       className="relative h-full group"
       style={{
         transformPerspective: 800,
-        rotateX: rotateXTilt,
-        rotateY: rotateYTilt,
+        rotateX: isTouchDevice ? 0 : rotateXTilt,
+        rotateY: isTouchDevice ? 0 : rotateYTilt,
         touchAction: "manipulation",
         minHeight: 260,
       }}
@@ -452,7 +518,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
           transformPerspective: 1000,
         }}
         animate={{ rotateY: flipped ? 180 : 0 }}
-        whileHover={{ rotateY: 180 }}
+        whileHover={isTouchDevice ? undefined : { rotateY: 180 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {/* Front face */}
@@ -480,7 +546,7 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
 
         {/* Back face */}
         <div
-          className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center"
+          className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center"
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -490,13 +556,18 @@ function FlipCard({ item }: { item: typeof SERVICE_GROUPS[number] }) {
             borderRadius: 12,
           }}
         >
-          <FlipCardX />
+          {/* Animated illustration — replaces standalone FlipCardX */}
+          {BackIllustration && (
+            <div className="mb-3">
+              <BackIllustration isFlipped={flipped || isCardHovered} />
+            </div>
+          )}
           <p className="text-sm text-white/50 leading-relaxed">{item.backBefore}</p>
           <p className="mt-3 text-base font-semibold text-white leading-snug">{item.backAfter}</p>
           <Link
             href="/contact"
             className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-accent hover:text-accent-hover transition-colors"
-            onClick={(e) => e.stopPropagation()}
+            onClick={handleCTAClick}
           >
             Start This <ArrowRight size={14} aria-hidden="true" />
           </Link>
@@ -551,6 +622,19 @@ function TheWork() {
 
 /* ─── 4. WHAT MAKES US DIFFERENT ──────────────────────── */
 
+const WHY_BLOCKS = [
+  {
+    key: "custom-build",
+    Icon: CustomBuildIcon,
+    badge: { countFrom: 1, countTo: 3, suffix: "× Faster" },
+  },
+  {
+    key: "seo-build",
+    Icon: SEORankIcon,
+    badge: { text: "Day 1 SEO" },
+  },
+];
+
 function WhatMakesUsDifferent() {
   const items = WHY_DOTXLABS.slice(0, 2);
 
@@ -585,27 +669,52 @@ function WhatMakesUsDifferent() {
                 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight"
               />
 
-              <StaggeredCards className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {items.map((item) => (
-                  <StaggeredCard key={item.heading}>
-                    <div
-                      className="p-8 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10"
-                      style={{
-                        background: "rgba(255,255,255,0.03)",
-                        border: "1px solid rgba(255,255,255,0.06)",
-                        borderRadius: 12,
-                      }}
-                    >
-                      <h3 className="text-xl font-bold text-white">
-                        {item.heading}
-                      </h3>
-                      <p className="mt-4 text-sm sm:text-base text-white/45 leading-relaxed">
-                        {item.content}
-                      </p>
-                    </div>
-                  </StaggeredCard>
-                ))}
-              </StaggeredCards>
+              <div className="mt-16 space-y-12">
+                {items.map((item, index) => {
+                  const block = WHY_BLOCKS[index];
+                  const IconComp = block.Icon;
+
+                  return (
+                    <StaggeredCards key={item.heading} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                      {/* Text column — left on desktop, below on mobile */}
+                      <StaggeredCard>
+                        <div
+                          className="lg:col-span-7 p-8 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 relative"
+                          style={{
+                            background: "rgba(255,255,255,0.03)",
+                            border: "1px solid rgba(255,255,255,0.06)",
+                            borderRadius: 12,
+                          }}
+                        >
+                          {/* Stat badge — top-right */}
+                          <div className="absolute top-4 right-4">
+                            <AnimatedStatBadge
+                              text={block.badge.text}
+                              countFrom={block.badge.countFrom}
+                              countTo={block.badge.countTo}
+                              suffix={block.badge.suffix}
+                            />
+                          </div>
+
+                          <h3 className="text-xl font-bold text-white pr-24">
+                            {item.heading}
+                          </h3>
+                          <p className="mt-4 text-sm sm:text-base text-white/45 leading-relaxed">
+                            {item.content}
+                          </p>
+                        </div>
+                      </StaggeredCard>
+
+                      {/* Icon column — right on desktop, above on mobile (reordered with CSS) */}
+                      <StaggeredCard>
+                        <div className="lg:col-span-5 flex items-center justify-center order-first lg:order-last">
+                          <IconComp />
+                        </div>
+                      </StaggeredCard>
+                    </StaggeredCards>
+                  );
+                })}
+              </div>
             </div>
           </PageFrame>
         </div>

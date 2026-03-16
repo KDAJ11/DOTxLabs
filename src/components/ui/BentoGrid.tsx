@@ -320,75 +320,158 @@ function CampaignIcon({ isHovered, reduced }: IconProps) {
   );
 }
 
+/* ─── SVG Pattern Backgrounds ────────────────────────── */
+
+function PatternGrid() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-grid" width="12" height="12" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="12" y2="0" stroke="#7B35FF" strokeWidth="0.5" />
+          <line x1="0" y1="0" x2="0" y2="12" stroke="#7B35FF" strokeWidth="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-grid)" />
+    </svg>
+  );
+}
+
+function PatternDiagonal() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-diag" width="8" height="8" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="8" x2="8" y2="0" stroke="#7B35FF" strokeWidth="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-diag)" />
+    </svg>
+  );
+}
+
+function PatternDots() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-dots" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="5" cy="5" r="1" fill="#7B35FF" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-dots)" />
+    </svg>
+  );
+}
+
+function PatternDiamond() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-diamond" width="20" height="20" patternUnits="userSpaceOnUse">
+          <polygon points="10,2 18,10 10,18 2,10" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-diamond)" />
+    </svg>
+  );
+}
+
+function PatternWaves() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-waves" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 0 40 A 20 20 0 0 1 20 20" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+          <path d="M 0 40 A 30 30 0 0 1 30 10" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+          <path d="M 0 40 A 40 40 0 0 1 40 0" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-waves)" />
+    </svg>
+  );
+}
+
+function PatternTarget() {
+  return (
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="pat-target" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="6" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+          <circle cx="20" cy="20" r="12" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+          <circle cx="20" cy="20" r="18" fill="none" stroke="#7B35FF" strokeWidth="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pat-target)" />
+    </svg>
+  );
+}
+
+const PATTERN_MAP: Record<string, React.ComponentType> = {
+  "Custom Web Development": PatternGrid,
+  "SEO Strategy": PatternDiagonal,
+  "AI Automation": PatternDots,
+  "Brand Identity": PatternDiamond,
+  "Digital Marketing": PatternWaves,
+  "Full Campaigns": PatternTarget,
+};
+
 /* ─── Card Data ───────────────────────────────────────── */
 
 type IconComponent = React.ComponentType<IconProps>;
 
+type CardPosition = "left" | "right";
+
 interface BentoCardData {
   title: string;
   description: string;
-  span: "1x1" | "1x2" | "2x1";
   gradient: string;
   Icon: IconComponent;
+  position: CardPosition;
 }
 
 const BENTO_CARDS: BentoCardData[] = [
   {
     title: "Custom Web Development",
     description: "React, Next.js, and Shopify — built from scratch for performance and conversion.",
-    span: "2x1",
     gradient: "from-accent/10 via-accent/5 to-transparent",
     Icon: WebDevIcon,
+    position: "left",
   },
   {
     title: "SEO Strategy",
     description: "Technical and content SEO built into every project from day one.",
-    span: "1x1",
     gradient: "from-emerald-500/10 via-emerald-500/5 to-transparent",
     Icon: SEOIcon,
+    position: "right",
   },
   {
     title: "AI Automation",
     description: "Chatbots, workflow automation, and AI tools integrated into your stack.",
-    span: "1x1",
     gradient: "from-blue-500/10 via-blue-500/5 to-transparent",
     Icon: AIIcon,
+    position: "left",
   },
   {
     title: "Brand Identity",
     description: "Logo, color systems, typography, and full brand guidelines that resonate.",
-    span: "1x1",
     gradient: "from-purple-400/10 via-purple-400/5 to-transparent",
     Icon: BrandIcon,
+    position: "right",
   },
   {
     title: "Digital Marketing",
     description: "PPC, email sequences, and content campaigns driving measurable ROI.",
-    span: "1x2",
     gradient: "from-amber-500/10 via-amber-500/5 to-transparent",
     Icon: MarketingIcon,
+    position: "left",
   },
   {
     title: "Full Campaigns",
     description: "Multi-channel strategy and execution unified under one roof.",
-    span: "1x1",
     gradient: "from-rose-500/10 via-rose-500/5 to-transparent",
     Icon: CampaignIcon,
+    position: "right",
   },
 ];
-
-/* ─── Helpers ─────────────────────────────────────────── */
-
-function getSpanClass(span: string): string {
-  switch (span) {
-    case "2x1":
-      return "md:col-span-2 md:row-span-1";
-    case "1x2":
-      return "md:col-span-1 md:row-span-2";
-    default:
-      return "md:col-span-1 md:row-span-1";
-  }
-}
 
 /* ─── BentoCard ───────────────────────────────────────── */
 
@@ -396,16 +479,21 @@ function BentoCard({
   card,
   reduced,
   canHover,
+  isMobile,
 }: {
   card: BentoCardData;
   reduced: boolean;
   canHover: boolean;
+  isMobile: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const Icon = card.Icon;
   const showCTA = !canHover || reduced || isHovered;
+  const Pattern = PATTERN_MAP[card.title];
+  const isLeft = card.position === "left";
+  const iconSize = isLeft ? 52 : 40;
 
-  return (
+  const cardContent = (
     <motion.div
       onHoverStart={() => canHover && !reduced && setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -419,20 +507,55 @@ function BentoCard({
               transition: { type: "spring", stiffness: 300, damping: 25 },
             }
       }
-      className="relative overflow-hidden rounded-2xl p-6 flex flex-col justify-end h-full"
+      /* Mobile breathing pulse */
+      animate={
+        isMobile && !reduced
+          ? {
+              boxShadow: [
+                "0 0 0px rgba(123,53,255,0)",
+                "0 0 12px rgba(123,53,255,0.3)",
+                "0 0 0px rgba(123,53,255,0)",
+              ],
+            }
+          : undefined
+      }
+      transition={
+        isMobile && !reduced
+          ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+          : undefined
+      }
+      className={`relative overflow-hidden rounded-2xl flex flex-col justify-end h-full ${
+        isLeft ? "lg:p-8 p-6" : "lg:p-5 p-6"
+      }`}
       style={{
         background: "rgba(255, 255, 255, 0.03)",
         border: "1px solid rgba(255, 255, 255, 0.06)",
         willChange: "transform, opacity",
+        touchAction: "manipulation",
       }}
     >
+      {/* SVG pattern background — unique per card */}
+      {Pattern && (
+        <div className="absolute inset-0 opacity-[0.06] pointer-events-none z-0">
+          <Pattern />
+        </div>
+      )}
+
       {/* Gradient overlay */}
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`}
+        className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none z-0`}
       />
 
-      {/* Animated icon — replaces old watermark SVG */}
-      <div className="absolute top-4 right-4 z-[1]">
+      {/* Animated icon */}
+      <div
+        className="absolute top-4 right-4 z-[1]"
+        style={{
+          width: iconSize,
+          height: iconSize,
+          transform: isLeft ? "scale(1.3)" : undefined,
+          transformOrigin: "top right",
+        }}
+      >
         <Icon isHovered={isHovered} reduced={reduced} />
       </div>
 
@@ -444,9 +567,9 @@ function BentoCard({
         </p>
       </div>
 
-      {/* "View Service →" CTA — slides up on hover */}
+      {/* "View Service →" CTA — hidden on mobile, slides up on hover on desktop */}
       <motion.div
-        className="absolute bottom-4 left-6 z-[2]"
+        className="hidden md:block absolute bottom-4 left-6 z-[2]"
         initial={canHover && !reduced ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
         animate={
           showCTA
@@ -465,6 +588,17 @@ function BentoCard({
       </motion.div>
     </motion.div>
   );
+
+  /* Mobile: entire card is a Link (tap target) */
+  if (isMobile) {
+    return (
+      <Link href="/services" className="block h-full" aria-label={`${card.title} — View Service`}>
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 }
 
 /* ─── BentoGrid ───────────────────────────────────────── */
@@ -472,9 +606,15 @@ function BentoCard({
 export default function BentoGrid({ className = "" }: { className?: string }) {
   const reduced = useReducedMotion();
   const [canHover, setCanHover] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setCanHover(window.matchMedia("(hover: hover)").matches);
+    const mql = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
   }, []);
 
   const containerVariants = {
@@ -508,17 +648,28 @@ export default function BentoGrid({ className = "" }: { className?: string }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      className={`grid grid-cols-1 md:grid-cols-3 auto-rows-[minmax(180px,1fr)] gap-4 ${className}`}
+      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${className}`}
     >
-      {BENTO_CARDS.map((card) => (
-        <motion.div key={card.title} variants={cardVariants} className={getSpanClass(card.span)}>
-          <BentoCard
-            card={card}
-            reduced={!!reduced}
-            canHover={canHover}
-          />
-        </motion.div>
-      ))}
+      {BENTO_CARDS.map((card) => {
+        const isLeft = card.position === "left";
+        return (
+          <motion.div
+            key={card.title}
+            variants={cardVariants}
+            className={isLeft ? "lg:col-span-2" : "lg:col-span-1"}
+            style={{
+              minHeight: isLeft ? 220 : 180,
+            }}
+          >
+            <BentoCard
+              card={card}
+              reduced={!!reduced}
+              canHover={canHover}
+              isMobile={isMobile}
+            />
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }
