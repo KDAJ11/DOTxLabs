@@ -20,6 +20,9 @@ export default function SmoothScroll() {
         smoothWheel: true,
       });
 
+      // Expose instance so other components can call lenis.scrollTo()
+      (window as unknown as Record<string, unknown>).__lenis = lenis;
+
       function raf(time: number) {
         if (!mounted) return;
         lenis.raf(time);
@@ -32,6 +35,7 @@ export default function SmoothScroll() {
       (window as unknown as Record<string, unknown>).__lenis_cleanup = () => {
         mounted = false;
         lenis.destroy();
+        delete (window as unknown as Record<string, unknown>).__lenis;
       };
     })();
 

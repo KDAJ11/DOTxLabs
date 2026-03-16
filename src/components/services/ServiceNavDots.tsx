@@ -78,7 +78,23 @@ export default function ServiceNavDots() {
   /* ─── Scroll to section ───────────────────────────── */
   const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (!el) return;
+
+    // Use Lenis for cinematic smooth scroll when available (desktop)
+    const lenis = (window as unknown as Record<string, unknown>).__lenis as
+      | { scrollTo: (target: HTMLElement, opts?: Record<string, unknown>) => void }
+      | undefined;
+
+    if (lenis) {
+      lenis.scrollTo(el, {
+        duration: 1.0,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        offset: -80, // clear fixed navbar
+      });
+    } else {
+      // Fallback for mobile / touch where Lenis is skipped
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   return (
