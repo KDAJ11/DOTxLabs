@@ -319,7 +319,7 @@ export default function SEOIllustration() {
         animate={
           isInView
             ? { strokeDashoffset: chromKeyframes.values }
-            : chromKeyframes.values[0]
+            : { strokeDashoffset: chromKeyframes.values[0] }
         }
         transition={
           isInView
@@ -348,7 +348,7 @@ export default function SEOIllustration() {
         animate={
           isInView
             ? { strokeDashoffset: urlBarKeyframes.values }
-            : urlBarKeyframes.values[0]
+            : { strokeDashoffset: urlBarKeyframes.values[0] }
         }
         transition={
           isInView
