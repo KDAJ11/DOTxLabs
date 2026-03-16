@@ -1,336 +1,415 @@
 "use client";
 
-import { motion, useReducedMotion, useInView } from "motion/react";
 import { useRef } from "react";
-import { loopTransition, interiorFill } from "./animationUtils";
+import { motion } from "motion/react";
+import { useInView, useReducedMotion } from "motion/react";
+import {
+  CYCLE,
+  DRAW_WINDOW,
+  HOLD_AT,
+  RESET_START,
+  strokeKeyframes,
+  fadeKeyframes,
+  loopTransition,
+  svgProps,
+  strokeStyle,
+  interiorFill,
+} from "./animationUtils";
 
 export default function BrandIllustration() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const reduced = useReducedMotion();
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
 
-  // Helper to compute keyframe times
-  const getKeyframes = (startDelay: number, drawDuration: number) => {
-    const s = Math.max(startDelay / 6, 0.001);
-    const e = Math.min((startDelay + drawDuration) / 6, 5 / 6 - 0.01);
-    const holdEnd = 5 / 6;
-    return {
-      values: [0, 0, 1, 1, 0],
-      times: [0, s, e, holdEnd, 1],
-    };
-  };
+  const shouldAnimate = isInView && !prefersReducedMotion;
 
-  const headerKeyframes = getKeyframes(0, 0.5);
-  const swatch1Keyframes = getKeyframes(0.5, 0.4);
-  const swatch2Keyframes = getKeyframes(0.8, 0.4);
-  const swatch3Keyframes = getKeyframes(1.1, 0.4);
-  const swatch4Keyframes = getKeyframes(1.4, 0.4);
-  const typo1Keyframes = getKeyframes(1.5, 0.5);
-  const typo2Keyframes = getKeyframes(1.8, 0.5);
-  const xLine1Keyframes = getKeyframes(2.5, 0.5);
-  const xLine2Keyframes = getKeyframes(2.7, 0.5);
-  const circleKeyframes = getKeyframes(3.5, 0.8);
-  const cornerDotsKeyframes = getKeyframes(3.2, 0.6);
+  // Color swatches data
+  const swatches = [
+    { color: "#7B35FF", label: "Primary", x: 20, y: 20 },
+    { color: "#9F67FF", label: "Light", x: 56, y: 20 },
+    { color: "#C4A3FF", label: "Soft", x: 20, y: 56 },
+    { color: "#1a0a2e", label: "Dark", x: 56, y: 56 },
+  ];
 
   return (
-    <svg
+    <motion.svg
       ref={ref}
-      viewBox="0 0 280 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      className="w-full h-auto"
-      style={{ maxWidth: 560 }}
+      {...svgProps}
+      initial={!shouldAnimate}
+      animate={shouldAnimate ? "animate" : "initial"}
     >
-      {/* HEADER LINE (Title bar) */}
-      <motion.path
-        d="M 15 18 L 265 18"
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: headerKeyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: headerKeyframes.times }
-            : undefined
-        }
-      />
+      {/* Top-left quadrant: Colour swatches */}
+      <motion.g
+        variants={{
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+        }}
+        transition={{ delay: 0, duration: 0.3 }}
+      >
+        {swatches.map((swatch, index) => (
+          <motion.g key={`swatch-${index}`}>
+            {/* Swatch rectangle */}
+            <motion.rect
+              x={swatch.x}
+              y={swatch.y}
+              width={16}
+              height={16}
+              fill={swatch.color}
+              rx={2}
+              animate={shouldAnimate ? "animate" : "initial"}
+              variants={{
+                initial: { fillOpacity: 0 },
+                animate: {
+                  fillOpacity: [0, 0, 1, 1, 0],
+                  transition: {
+                    ...loopTransition,
+                    delay: index * 0.3,
+                  },
+                },
+              }}
+              style={{ willChange: "opacity" }}
+            />
+            {/* Label */}
+            <motion.text
+              x={62}
+              y={swatch.y + 12}
+              fontSize={8}
+              fill="white"
+              fillOpacity={0.6}
+              animate={shouldAnimate ? "animate" : "initial"}
+              variants={{
+                initial: { opacity: 0 },
+                animate: {
+                  opacity: [0, 0, 1, 1, 0],
+                  transition: {
+                    ...loopTransition,
+                    delay: index * 0.3,
+                  },
+                },
+              }}
+              style={{ willChange: "opacity" }}
+            >
+              {swatch.label}
+            </motion.text>
+          </motion.g>
+        ))}
+      </motion.g>
 
-      {/* COLOUR SWATCHES (LEFT SIDE, STACKED VERTICALLY) */}
-      {/* Swatch 1 */}
-      <motion.rect
-        x={15}
-        y={25}
-        width={40}
-        height={25}
-        rx={3}
-        fill="rgba(123, 53, 255, 0.4)"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: swatch1Keyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: swatch1Keyframes.times }
-            : undefined
-        }
-      />
+      {/* Top-right quadrant: Typography specimen */}
+      <motion.g
+        animate={shouldAnimate ? "animate" : "initial"}
+        variants={{
+          initial: { opacity: 0 },
+          animate: {
+            opacity: [0, 0, 1, 1, 0],
+            transition: {
+              ...loopTransition,
+              delay: 0.8,
+            },
+          },
+        }}
+        style={{ willChange: "opacity" }}
+      >
+        {/* Heading stroke (thick) */}
+        <motion.line
+          x1={160}
+          y1={35}
+          x2={220}
+          y2={35}
+          stroke="#7B35FF"
+          strokeWidth={3}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 0.8,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        {/* Body stroke (thin) */}
+        <motion.line
+          x1={160}
+          y1={55}
+          x2={205}
+          y2={55}
+          stroke="#7B35FF"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 0.8,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        {/* Aa text */}
+        <motion.text
+          x={220}
+          y={80}
+          fontSize={20}
+          fill="#7B35FF"
+          fillOpacity={0.6}
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { opacity: 0 },
+            animate: {
+              opacity: [0, 0, 0.6, 0.6, 0],
+              transition: {
+                ...loopTransition,
+                delay: 0.8,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        >
+          Aa
+        </motion.text>
+      </motion.g>
 
-      {/* Swatch 2 */}
-      <motion.rect
-        x={15}
-        y={55}
-        width={40}
-        height={25}
-        rx={3}
-        fill="rgba(123, 53, 255, 0.25)"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: swatch2Keyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: swatch2Keyframes.times }
-            : undefined
-        }
-      />
+      {/* Bottom-left quadrant: Logo mark */}
+      <motion.g
+        animate={shouldAnimate ? "animate" : "initial"}
+        variants={{
+          initial: { scale: 1 },
+          animate: {
+            scale: [1, 1, 1, 1.05, 1],
+            transition: {
+              ...loopTransition,
+              delay: 1.6,
+            },
+          },
+        }}
+        origin="center"
+        style={{ willChange: "transform" }}
+      >
+        {/* X diagonal strokes */}
+        <motion.line
+          x1={50}
+          y1={130}
+          x2={90}
+          y2={170}
+          stroke="#7B35FF"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 1.6,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        <motion.line
+          x1={90}
+          y1={130}
+          x2={50}
+          y2={170}
+          stroke="#7B35FF"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 1.6,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
 
-      {/* Swatch 3 */}
-      <motion.rect
-        x={15}
-        y={85}
-        width={40}
-        height={25}
-        rx={3}
-        fill="rgba(123, 53, 255, 0.15)"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: swatch3Keyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: swatch3Keyframes.times }
-            : undefined
-        }
-      />
+        {/* Circle around X */}
+        <motion.circle
+          cx={70}
+          cy={150}
+          r={25}
+          stroke="#7B35FF"
+          strokeWidth={1.5}
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 1.6,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+      </motion.g>
 
-      {/* Swatch 4 */}
-      <motion.rect
-        x={15}
-        y={115}
-        width={40}
-        height={25}
-        rx={3}
-        fill="rgba(123, 53, 255, 0.08)"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: swatch4Keyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: swatch4Keyframes.times }
-            : undefined
-        }
-      />
+      {/* Bottom-right quadrant: Guidelines document */}
+      <motion.g
+        animate={shouldAnimate ? "animate" : "initial"}
+        variants={{
+          initial: { opacity: 0 },
+          animate: {
+            opacity: [0, 0, 1, 1, 0],
+            transition: {
+              ...loopTransition,
+              delay: 2.4,
+            },
+          },
+        }}
+        style={{ willChange: "opacity" }}
+      >
+        {/* Document rectangle */}
+        <motion.rect
+          x={180}
+          y={115}
+          width={60}
+          height={80}
+          rx={4}
+          fill={interiorFill}
+          stroke="#7B35FF"
+          strokeWidth={1.5}
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
 
-      {/* TYPOGRAPHY SAMPLES (RIGHT SIDE) */}
-      {/* Typography Line 1 (longer) */}
-      <motion.path
-        d="M 80 40 L 170 40"
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: typo1Keyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: typo1Keyframes.times }
-            : undefined
-        }
-      />
+        {/* Text lines inside document */}
+        <motion.line
+          x1={190}
+          y1={135}
+          x2={230}
+          y2={135}
+          stroke="#7B35FF"
+          strokeWidth={1}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        <motion.line
+          x1={190}
+          y1={150}
+          x2={230}
+          y2={150}
+          stroke="#7B35FF"
+          strokeWidth={1}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        <motion.line
+          x1={190}
+          y1={165}
+          x2={230}
+          y2={165}
+          stroke="#7B35FF"
+          strokeWidth={1}
+          strokeLinecap="round"
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
 
-      {/* Typography Line 2 (shorter) */}
-      <motion.path
-        d="M 80 65 L 145 65"
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: typo2Keyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: typo2Keyframes.times }
-            : undefined
-        }
-      />
-
-      {/* LOGO MARK: X (CENTER) */}
-      {/* X Line 1 (top-left to bottom-right) */}
-      <motion.path
-        d="M 120 110 L 160 150"
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: xLine1Keyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: xLine1Keyframes.times }
-            : undefined
-        }
-      />
-
-      {/* X Line 2 (top-right to bottom-left) */}
-      <motion.path
-        d="M 160 110 L 120 150"
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: xLine2Keyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: xLine2Keyframes.times }
-            : undefined
-        }
-      />
-
-      {/* CIRCLE AROUND X */}
-      <motion.circle
-        cx={140}
-        cy={130}
-        r={23}
-        stroke="#7B35FF"
-        strokeWidth={1.5}
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={
-          inView && !reduced
-            ? { pathLength: circleKeyframes.values }
-            : { pathLength: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: circleKeyframes.times }
-            : undefined
-        }
-      />
-
-      {/* CORNER DOTS (Grid alignment markers) */}
-      {/* Top-left corner */}
-      <motion.circle
-        cx={15}
-        cy={15}
-        r={2}
-        fill="#7B35FF"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: cornerDotsKeyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: cornerDotsKeyframes.times }
-            : undefined
-        }
-      />
-
-      {/* Top-right corner */}
-      <motion.circle
-        cx={265}
-        cy={15}
-        r={2}
-        fill="#7B35FF"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: cornerDotsKeyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: cornerDotsKeyframes.times }
-            : undefined
-        }
-      />
-
-      {/* Bottom-left corner */}
-      <motion.circle
-        cx={15}
-        cy={185}
-        r={2}
-        fill="#7B35FF"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: cornerDotsKeyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: cornerDotsKeyframes.times }
-            : undefined
-        }
-      />
-
-      {/* Bottom-right corner */}
-      <motion.circle
-        cx={265}
-        cy={185}
-        r={2}
-        fill="#7B35FF"
-        initial={{ opacity: 0 }}
-        animate={
-          inView && !reduced
-            ? { opacity: cornerDotsKeyframes.values }
-            : { opacity: reduced ? 1 : 0 }
-        }
-        transition={
-          inView && !reduced
-            ? { ...loopTransition, times: cornerDotsKeyframes.times }
-            : undefined
-        }
-      />
-    </svg>
+        {/* X watermark */}
+        <motion.line
+          x1={226}
+          y1={166}
+          x2={234}
+          y2={174}
+          stroke="#7B35FF"
+          strokeWidth={1}
+          strokeLinecap="round"
+          opacity={0.3}
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+        <motion.line
+          x1={234}
+          y1={166}
+          x2={226}
+          y2={174}
+          stroke="#7B35FF"
+          strokeWidth={1}
+          strokeLinecap="round"
+          opacity={0.3}
+          animate={shouldAnimate ? "animate" : "initial"}
+          variants={{
+            initial: { pathLength: 0 },
+            animate: {
+              pathLength: [0, 0, 1, 1, 0],
+              transition: {
+                ...loopTransition,
+                delay: 2.4,
+              },
+            },
+          }}
+          style={{ willChange: "opacity" }}
+        />
+      </motion.g>
+    </motion.svg>
   );
 }

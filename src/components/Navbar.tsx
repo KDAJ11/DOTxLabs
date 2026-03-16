@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -13,6 +14,7 @@ const groups = Object.entries(NAV_SERVICES) as [
 ][];
 
 export default function Navbar() {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -95,6 +97,7 @@ export default function Navbar() {
                   style={{ letterSpacing: "0.02em" }}
                   aria-expanded={activeDropdown === groupName}
                   aria-haspopup="true"
+                  onClick={() => router.push("/services")}
                 >
                   {groupName}
                   <ChevronDown
@@ -210,11 +213,14 @@ export default function Navbar() {
 
               {groups.map(([groupName, items]) => (
                 <div key={groupName}>
-                  <p className="text-[11px] font-medium text-accent/80 uppercase mb-2"
+                  <Link
+                    href="/services"
+                    onClick={() => setMobileOpen(false)}
+                    className="block text-[11px] font-medium text-accent/80 uppercase mb-2 min-h-[44px] flex items-center"
                     style={{ letterSpacing: "0.12em" }}
                   >
                     {groupName}
-                  </p>
+                  </Link>
                   {items.map((item) => (
                     <Link
                       key={item.href}

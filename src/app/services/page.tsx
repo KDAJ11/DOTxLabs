@@ -251,10 +251,10 @@ function ServiceDeliverables({
 
   return (
     <motion.div
-      initial={reduced ? { opacity: 1 } : { y: 40, opacity: 0 }}
-      whileInView={reduced ? { opacity: 1 } : { y: 0, opacity: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      initial={reduced ? { x: 0, opacity: 1 } : { x: -60, opacity: 0 }}
+      whileInView={reduced ? { x: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{ willChange: "transform, opacity" }}
     >
       <div
@@ -466,8 +466,10 @@ export default function ServicesPage() {
                       />
                     )}
 
-                    {/* Deliverables Card */}
-                    <ServiceDeliverables service={service} isEven={isEven} />
+                    {/* Deliverables Card — tighter relationship to process flow */}
+                    <div className="-mt-16">
+                      <ServiceDeliverables service={service} isEven={isEven} />
+                    </div>
                   </div>
                 </div>
               </div>
