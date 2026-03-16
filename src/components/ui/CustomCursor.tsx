@@ -159,8 +159,8 @@ export default function CustomCursor() {
   // Crosshair line color
   const lineColor =
     isHovering && !reducedMotion
-      ? "rgba(255,255,255,0.9)"
-      : "rgba(255,255,255,0.6)";
+      ? "rgba(255,255,255,1)"
+      : "rgba(255,255,255,0.85)";
 
   return (
     <>
@@ -251,10 +251,11 @@ export default function CustomCursor() {
           width: 32,
           height: 32,
           borderRadius: "50%",
-          border: "1.5px solid rgba(255,255,255,0.5)",
+          border: "1.5px solid rgba(255,255,255,0.7)",
           background: "transparent",
           pointerEvents: "none",
           zIndex: 9999,
+          mixBlendMode: "difference",
           opacity: hidden ? 0 : 1,
           willChange: "transform",
         }}
@@ -273,6 +274,7 @@ export default function CustomCursor() {
           zIndex: 9999,
           opacity: hidden ? 0 : 1,
           willChange: "transform",
+          mixBlendMode: "difference",
         }}
       >
         {/* Inner wrapper handles rotation */}

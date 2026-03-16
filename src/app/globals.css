@@ -394,8 +394,8 @@ hr, .divider {
 .cursor-ring[data-hover="true"] {
   width: 52px !important;
   height: 52px !important;
-  border-color: rgba(123,53,255,0.6);
-  background: rgba(123,53,255,0.12);
+  border-color: rgba(180,140,255,0.85);
+  background: rgba(180,140,255,0.18);
 }
 /* dot morph handled by AnimatePresence in CustomCursor.tsx */
 .cursor-ring[data-click="true"] {
