@@ -2,17 +2,20 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Suspicious query patterns — common injection/scanning probes
+// NOTE: Do NOT use the `g` flag — RegExp objects with `g` are stateful
+// (`lastIndex` persists between .test() calls), causing intermittent false negatives.
+// Also avoid unbounded `.*` to prevent ReDoS on crafted long strings.
 const SUSPICIOUS_PATTERNS = [
-  /(\<|%3C).*script.*(\>|%3E)/gi, // XSS script injection
-  /(union|select|insert|update|delete|drop|alter)\s/gi, // SQL injection
-  /\.\.\//g, // Path traversal
-  /\/etc\/passwd/gi, // Unix file access
-  /\/proc\/self/gi, // Linux proc access
-  /\beval\s*\(/gi, // eval() injection
-  /javascript:/gi, // JavaScript protocol
-  /data:text\/html/gi, // Data URI XSS
-  /on(load|error|click|mouseover)\s*=/gi, // Event handler injection
-  /\bexec\s*\(/gi, // exec() injection
+  /(<|%3C)[^>]{0,100}script[^>]{0,100}(>|%3E)/i, // XSS script injection (bounded)
+  /\b(union|select|insert|update|delete|drop|alter)\s/i, // SQL injection
+  /\.\.\//,                                              // Path traversal
+  /\/etc\/passwd/i,                                      // Unix file access
+  /\/proc\/self/i,                                       // Linux proc access
+  /\beval\s*\(/i,                                        // eval() injection
+  /javascript:/i,                                        // JavaScript protocol
+  /data:text\/html/i,                                    // Data URI XSS
+  /on(load|error|click|mouseover)\s*=/i,                 // Event handler injection
+  /\bexec\s*\(/i,                                        // exec() injection
 ];
 
 /**
