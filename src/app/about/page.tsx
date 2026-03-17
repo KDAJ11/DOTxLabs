@@ -148,7 +148,7 @@ export default function AboutPage() {
                 <AnimateOnScroll>
                   <Image
                     src="/DOTxLabs.png"
-                    alt="DOTxLabs"
+                    alt="DOTxLabs logo — how we operate"
                     width={200}
                     height={63}
                     className="max-w-[200px] h-auto mb-8"

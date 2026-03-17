@@ -55,6 +55,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
+      aria-label="Main navigation"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         scrolled
           ? "bg-hero/70 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.3)]"
@@ -67,7 +68,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center">
             <Image
               src="/DOTxLabs.png"
-              alt="DOTxLabs"
+              alt="DOTxLabs — AI-First Digital Agency in Toronto"
               width={192}
               height={64}
               className="h-[64px] w-auto"

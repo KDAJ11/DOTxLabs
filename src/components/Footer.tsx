@@ -5,7 +5,7 @@ import { NAV_SERVICES } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-hero text-white">
+    <footer className="relative bg-hero text-white" role="contentinfo">
       {/* Part 6: Gradient line at top of footer */}
       <div
         className="absolute top-0 left-0 right-0"
@@ -16,13 +16,13 @@ export default function Footer() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
+        <nav aria-label="Footer navigation" className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div>
             <Link href="/" className="inline-block">
               <Image
                 src="/DOTxLabs.png"
-                alt="DOTxLabs"
+                alt="DOTxLabs logo — Toronto web design and digital agency"
                 width={180}
                 height={60}
                 className="h-[60px] w-auto brightness-110"
@@ -154,7 +154,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-        </div>
+        </nav>
 
         <div className="mt-16 border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/30">
